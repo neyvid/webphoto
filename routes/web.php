@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Route::get('/', function () {
+//     return view('admin.users.index');
+// });
 Route::get('/', function () {
-    return view('admin.users.index');
+    return view('front.layout.master');
 });
+// Route::get('/user',[UserController::class,'show'])->middleware('auth');
+
+Route::controller(UserController::class)->group(function(){
+    Route::get('/user','show');
+});
+Route::get('/user',[UserController::class,'show']);

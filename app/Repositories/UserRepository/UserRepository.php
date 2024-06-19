@@ -3,10 +3,13 @@ namespace App\Repositories\UserRepository;
 
 use App\Models\User;
 use App\Repositories\Contract\BaseRepository;
-class UserRespository extends BaseRepository{
-    
-    public function __constract(){
+
+class UserRepository extends BaseRepository{
+    public function __construct()
+    {
         $this->model=User::class;
     }
-    
 }
+
+
+?>
