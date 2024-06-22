@@ -1,0 +1,8 @@
+@font-face {
+    font-family: vazir;
+    src: url('/public/fonts/fonts/vazir/Vazirmatn-Regular.ttf');
+ 
+  }
+  *{
+    font-family: vazir;
+  }

@@ -18,7 +18,10 @@ use Illuminate\Support\Facades\Route;
 //     return view('admin.users.index');
 // });
 Route::get('/', function () {
-    return view('front.layout.master');
+    return view('front.index');
+});
+Route::get('/login', function () {
+    return view('front.user.login');
 });
 // Route::get('/user',[UserController::class,'show'])->middleware('auth');
 
