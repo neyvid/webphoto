@@ -47,9 +47,9 @@ class UserController extends Controller
         $userLogin=Auth::attempt([$userFieldEntry=>$request->username,'password'=>$request->password],true);
     
         if($userLogin){
-            return 'you are login successfully';
+            return redirect('/');
         }
-
+        return redirect()->back()->with('warning','مشخصات ورودی صحیح نمی باشد');
     }
     public function doRegister(authRequest $request){
        $authType= $this->authType($request->username);

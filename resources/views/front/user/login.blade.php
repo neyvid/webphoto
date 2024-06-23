@@ -1,6 +1,10 @@
 @extends('front.layout.master')
 @section('main-content')
-
+@if (session('warning'))
+                <div class="alert alert-danger">
+                    {{ session('warning') }}
+                </div>
+            @endif
 <section class="page-header page-header-modern bg-color-light-scale-1 page-header-lg">
     <div class="container">
         <div class="row">
