@@ -27,14 +27,14 @@
                 <div class="row">
                     <div class="form-group col">
                         <label class="form-label text-color-dark text-3">پست الکترونیک (ایمیل)<span class="text-color-danger">*</span></label>
-                        <input type="text" value="" class="form-control form-control-lg text-4" required>
+                        <input type="text" name="username" value="" class="form-control form-control-lg text-4" required>
                     </div>
 
                 </div>
                 <div class="row">
                     <div class="form-group col">
                         <label class="form-label text-color-dark text-3">رمز عبور <span class="text-color-danger">*</span></label>
-                        <input type="password" value="" class="form-control form-control-lg text-4" required>
+                        <input type="password" name="password" value="" class="form-control form-control-lg text-4" required>
                         
                     </div>
                 </div>

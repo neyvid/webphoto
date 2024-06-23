@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Front\UserController as FrontUserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,8 +25,16 @@ Route::get('/login', function () {
     return view('front.user.login');
 });
 // Route::get('/user',[UserController::class,'show'])->middleware('auth');
+Route::controller(FrontUserController::class)->group(function(){
+    Route::get('/login','showLogin')->name('login');
+    Route::post('/login','doLogin')->name('dologin');
+    Route::get('/register','showRegister');
+    Route::post('/register','doRegister');
+});
+
+
 
 Route::controller(UserController::class)->group(function(){
-    Route::get('/user','show');
+    Route::get('/panel/user','show')->middleware('auth')->name('user.edit');
 });
-Route::get('/user',[UserController::class,'show']);
+// Route::get('/user',[UserController::class,'show']);

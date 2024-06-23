@@ -5,6 +5,9 @@ abstract class BaseRepository{
     public function find($id){
         return $this->model::find($id);
     }
+    public function create(array $data){
+        return $this->model::create($data);
+    }
     public function findBy(array $criteria, $single = true)
     {
         $query = $this->model::query();

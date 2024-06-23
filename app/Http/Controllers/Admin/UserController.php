@@ -14,6 +14,6 @@ class UserController extends Controller
         $this->userRepo=new UserRepository();
     }
     public function show(){
-        return $this->userRepo->findBy(['name'=>'ali','sex'=>'مرد']);
+        return view('admin.users.index');
     }
 }
