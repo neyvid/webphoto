@@ -21,6 +21,15 @@
 
     <div class="row justify-content-center  text-end">
         <div class="col-md-6 col-lg-5 mb-5 mb-lg-0">
+            @if($errors->any())
+            <div class="alert alert-danger" dir="rtl">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
             <h2 class="font-weight-bold text-5 mb-0">ورود</h2>
             <form action="/login" id="frmSignIn" method="post" class="needs-validation" novalidate >
               @csrf
