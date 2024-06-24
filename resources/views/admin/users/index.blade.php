@@ -1,9 +1,10 @@
 @extends('admin.layout.master')
-
-@section('content-header')
-سلام از 
+@section('page-title')
+مدیریت کاربران
 @endsection
-
+@section('content-header')
+مدیریت کاربران
+@endsection
 @section('content-breadcrumb')
 <ol class="breadcrumb float-sm-right">
     <li class="breadcrumb-item"><a href="#">صفحه نخست</a></li>
@@ -11,24 +12,66 @@
   </ol>
 @endsection
 @section('main-content')
-<!-- Small boxes (Stat box) -->
 <div class="row">
-  <div class="col-lg-12 col-12">
-   
-    <div class="small-box bg-info">
-      <div class="inner">
-        <h3>150</h3>
+  <div class="col-12">
+    <div class="card">
+      @if (session('success'))
+      <div class="alert alert-success">
+          {{ session('success') }}
+      </div>
+      @endif
+      <div class="card-header">
+        <h3 class="card-title">لیست کابران</h3>
 
-        <p>سفارشات جدید</p>
+        <div class="card-tools">
+          <div class="input-group input-group-sm" style="width: 150px;">
+            <input type="text" name="table_search" class="form-control float-right" placeholder="جستجو">
+
+                <div class="input-group-append">
+       <button type="submit" class="btn btn-default">
+      <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="icon">
-        <i class="ion ion-bag"></i>
+      <!-- /.card-header -->
+      <div class="card-body table-responsive p-0" style="height: 300px;">
+        <table class="table table-head-fixed text-nowrap">
+          <thead>
+            <tr>
+              <th>ردیف</th>
+              <th>نام و نام خانوداگی </th>
+              <th>ایمیل</th>
+              <th>موبایل</th>
+              <th>وضعیت</th>
+              <th>عملیات</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach ($users as $user )
+            <tr>
+              <td>{{$loop->iteration}}</td>
+              <td>{{ $user->name }}</td>
+              <td>{{ $user->email }}</td>
+              <td>{{ $user->mobile }}</td>
+              
+              <td><span class="badge {{ $user->status=='فعال'? "bg-danger" : "bg-success" }}">{{ $user->status }}</span></td>
+              <td>
+                <a href="{{ route('user.edit') }}"><span class="badge bg-warning">ویرایش</span></a>
+                <a href="{{ route('user.delete').'?id='.$user->id }}"><span class="badge bg-danger">حذف</span></a>
+              </td>
+            </tr>
+            @endforeach
+        
+       
+          </tbody>
+        </table>
       </div>
-      <a href="#" class="small-box-footer">اطلاعات بیشتر <i class="fas fa-arrow-circle-right"></i></a>
+      <!-- /.card-body -->
     </div>
+    <!-- /.card -->
   </div>
-  
 </div>
-<!-- /.row -->
 
 @endsection

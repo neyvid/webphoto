@@ -3,7 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>داشبورد | AdminLTE 3 راستچین شده فارسی</title>
+  <title>
+    @yield('page-title','پنل مدیریت')
+  </title>
 
   <!-- Google Font: Source Sans Pro -->
   

@@ -149,6 +149,11 @@
                                                 </li>
                                             </ul>
                                         </li>
+                                        <li>
+                                            <a class="dropdown-item dropdown-toggle " href={{ route('panel') }}>
+                                                پنل مدیریت
+                                            </a>
+                                        </li>
                                         <li class="dropdown dropdown-mega">
                                             <a class="dropdown-item dropdown-toggle" href="elements.html">
                                                 Elements

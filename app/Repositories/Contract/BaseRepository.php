@@ -19,6 +19,16 @@ abstract class BaseRepository{
         }
         return $query->get();
     }
+    public function all(){
+        return $this->model::all();
+        
+    }
+
+    
+    public function delete(int $id){
+        $item = $this->model::find($id);
+        return $item->delete();
+    }
 }
 
 ?>

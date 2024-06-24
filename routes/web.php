@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\UserController as FrontUserController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,16 +17,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('admin.users.index');
-// });
-Route::get('/', function () {
-    return view('front.index');
-});
-Route::get('/login', function () {
-    return view('front.user.login');
-});
-// Route::get('/user',[UserController::class,'show'])->middleware('auth');
+
+//Route OF FRONT
+Route::get('/',[HomeController::class,'index'])->name('home');
 Route::controller(FrontUserController::class)->group(function(){
     Route::get('/login','showLogin')->name('login');
     Route::post('/login','doLogin')->name('dologin');
@@ -33,8 +28,10 @@ Route::controller(FrontUserController::class)->group(function(){
 });
 
 
-
-Route::controller(UserController::class)->group(function(){
-    Route::get('/panel/user','show')->middleware('auth')->name('user.edit');
+//Route OF ADMIN PANEL
+Route::controller(UserController::class)->prefix('panel')->group(function(){
+    Route::get('user','show')->name('users.show');
+    Route::get('user/delete','delete')->name('user.delete');
+    Route::get('user/edit','edit')->name('user.edit');
 });
-// Route::get('/user',[UserController::class,'show']);
+Route::get('/panel',[AdminController::class,'index'])->name('panel');
