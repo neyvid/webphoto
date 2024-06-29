@@ -4,6 +4,7 @@
 @endsection
 @section('content-header')
 ویرایش کاربر
+
 @endsection
 @section('content-breadcrumb')
 <ol class="breadcrumb float-sm-right">
@@ -12,126 +13,85 @@
   </ol>
 @endsection
 @section('main-content')
-<div class="card card-default">
-    <div class="card-header">
-      <h3 class="card-title">Select2 (قالب پیشفرض)</h3>
-
-      <div class="card-tools">
-        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-          <i class="fas fa-minus"></i>
-        </button>
-        <button type="button" class="btn btn-tool" data-card-widget="remove">
-          <i class="fas fa-times"></i>
-        </button>
+<div class="row">
+  <!-- left column -->
+  <div class="col-md-12">
+    <!-- general form elements -->
+    <div class="card card-primary">
+      <div class="card-header">
+        <h3 class="card-title">فرم ویرایش کاربر</h3>
       </div>
-    </div>
-    <!-- /.card-header -->
-    <div class="card-body">
-      <div class="row">
-        <div class="col-md-6">
+      <!-- /.card-header -->
+      <!-- form start -->
+      <form method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="card-body">
           <div class="form-group">
-            <label>مینیمال</label>
-            <select class="form-control select2" style="width: 100%;">
-              <option selected="selected">تهران</option>
-              <option>مشهد</option>
-              <option>یزد</option>
-              <option>اصفهان</option>
-              <option>شهر کرد</option>
-              <option>ساری</option>
-              <option>مازندران</option>
-            </select>
+            <label for="name">نام </label>
+            <input type="text" name="name" value="{{ $user->name }}" class="form-control" id="name" placeholder="نام خود را وارد نمایید">
           </div>
-          <!-- /.form-group -->
           <div class="form-group">
-            <label>غیر فعال</label>
-            <select class="form-control select2" disabled="disabled" style="width: 100%;">
-              <option selected="selected">تهران</option>
-              <option>مشهد</option>
-              <option>یزد</option>
-              <option>کرمان</option>
-              <option>بندر عباس</option>
-              <option>ساری</option>
-              <option>مازندران</option>
-            </select>
+            <label for="lastname">نام خانوادگی</label>
+            <input type="text" name="lastname" value="{{ $user->lastname }}" class="form-control" id="lastaname" placeholder="نام خانوادگی را وارد نمایید">
           </div>
-          <!-- /.form-group -->
-        </div>
-        <!-- /.col -->
-        <div class="col-md-6">
           <div class="form-group">
-            <label>چند گانه</label>
-            <select class="select2" multiple="multiple" data-placeholder="یک استان را انتخاب کنید" style="width: 100%;">
-              <option>تهران</option>
-              <option>مشهد</option>
-              <option>یزد</option>
-              <option>کرمان</option>
-              <option>بندر عباس</option>
-              <option>ساری</option>
-              <option>مازندران</option>
-            </select>
+            <label for="phone">شماره تماس</label>
+            <input type="text" name="phone" value="{{ $user->phone }}" class="form-control" id="phone" placeholder="کد ملی خود را وارد نمایید">
           </div>
-          <!-- /.form-group -->
           <div class="form-group">
-            <label>نتیجه غیر فعال</label>
-            <select class="form-control select2" style="width: 100%;">
-              <option selected="selected">تهران</option>
-              <option>مشهد</option>
-              <option disabled="disabled">یزد (غیر فعال)</option>
-              <option>کرمان</option>
-              <option>بندر عباس</option>
-              <option>ساری</option>
-              <option>مازندران</option>
-            </select>
+            <label for="ایمیل">ایمیل</label>
+            <input type="email" name="email" disabled value="{{ $user->email }}" class="form-control" id="email" placeholder="ایمیل خود را وارد نمایید">
           </div>
-          <!-- /.form-group -->
-        </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
-
-      <h5>انواع رنگ ها</h5>
-      <div class="row">
-        <div class="col-12 col-sm-6">
           <div class="form-group">
-            <label>مینیمال (.select2-danger)</label>
-            <select class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;">
-              <option selected="selected">تهران</option>
-              <option>مشهد</option>
-              <option>یزد</option>
-              <option>کرمان</option>
-              <option>بندر عباس</option>
-              <option>ساری</option>
-              <option>مازندران</option>
-            </select>
+            <label for="mobile">شماره همراه</label>
+            <input type="phone" disabled name="mobile" value="{{ $user->mobile }}" class="form-control" id="mobile" placeholder="شماره همراه خود را وارد نمایید">
           </div>
-          <!-- /.form-group -->
-        </div>
-        <!-- /.col -->
-        <div class="col-12 col-sm-6">
+      
           <div class="form-group">
-            <label>چند گانه (.select2-purple)</label>
-            <div class="select2-purple">
-              <select class="select2" multiple="multiple" data-placeholder="یک استان را انتخاب کنید" data-dropdown-css-class="select2-purple" style="width: 100%;">
-                <option>تهران</option>
-                <option>مشهد</option>
-                <option>یزد</option>
-                <option>کرمان</option>
-                <option>بندر عباس</option>
-                <option>ساری</option>
-                <option>مازندران</option>
-              </select>
+            <label for="national_code">کد ملی</label>
+            <input type="text" disabled name="national_code" value="{{ $user->national_code }}" class="form-control" id="national_code" placeholder="کد ملی خود را وارد نمایید">
+          </div>
+          <div class="form-group">
+            <label for="sex">جنسیت</label>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="sex" value="1" {{  ($user->sex=='مرد')? 'checked': ''}}>
+              <label class="form-check-label">مرد</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio"  name="sex" value="0"  {{  ($user->sex=='زن')? 'checked': ''}}>
+              <label class="form-check-label">زن</label>
             </div>
           </div>
-          <!-- /.form-group -->
+          <div class="form-group">
+            <label for="address">آدرس</label>
+            <textarea type="text" name="address" class="form-control" id="national_code" placeholder="آدرس خود را وارد نمایید">{{ $user->address }}</textarea>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputFile">فایل</label>
+            <div class="input-group">
+              <div class="custom-file">
+                <input type="file" name="file" class="custom-file-input" id="exampleInputFile">
+                <label class="custom-file-label" for="exampleInputFile">انتخاب فایل</label>
+              </div>
+              <div class="input-group-append">
+                <span class="input-group-text">بارگزاری</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">مرا انتخاب کنید</label>
+          </div>
         </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
+        <!-- /.card-body -->
+
+        <div class="card-footer">
+          <button type="submit" class="btn btn-primary">ارسال</button>
+        </div>
+      </form>
     </div>
-    <!-- /.card-body -->
-    <div class="card-footer">
-       جهت اطلاعات بیشتر این افزونه مستندات آن را بررسی نمایید:
-      <a href="https://select2.github.io/">Select2 documentation</a>
-    </div>
+    <!-- /.card -->
+
   </div>
+</div>
   @endsection

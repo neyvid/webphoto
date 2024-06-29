@@ -58,7 +58,7 @@
               
               <td><span class="badge {{ $user->status=='فعال'? "bg-danger" : "bg-success" }}">{{ $user->status }}</span></td>
               <td>
-                <a href="{{ route('user.edit') }}"><span class="badge bg-warning">ویرایش</span></a>
+                <a href="{{ route('user.edit').'?id='.$user->id }}"><span class="badge bg-warning">ویرایش</span></a>
                 <a href="{{ route('user.delete').'?id='.$user->id }}"><span class="badge bg-danger">حذف</span></a>
               </td>
             </tr>

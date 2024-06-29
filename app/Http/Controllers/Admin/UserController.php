@@ -31,7 +31,20 @@ class UserController extends Controller
             return redirect()->back()->with('success', 'کاربر موردنظرباموفقیت حذف گردید');
         }
     }
-    public function edit(){
-        return view('admin.users.update');
+    public function edit(Request $request){
+        $user=$this->userRepo->find($request->id);
+        return view('admin.users.update',compact('user'));
+    }
+    public function update(Request $request){
+        $data=[
+            'name'=>$request->name,
+            'lastname'=>$request->lastname,
+            'sex'=>$request->sex,
+            'address'=>$request->address,
+            'phone'=>$request->phone
+        ];
+        return $request->hasFile('file');
+        return $data;
+        $this->userRepo->update($request->id,$data);
     }
 }

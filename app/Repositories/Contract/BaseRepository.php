@@ -29,6 +29,10 @@ abstract class BaseRepository{
         $item = $this->model::find($id);
         return $item->delete();
     }
+    public function update(int $id,array $data){
+        $item = $this->model::find($id);
+        return $item->update($data);
+    }
 }
 
 ?>

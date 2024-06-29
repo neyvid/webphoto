@@ -33,5 +33,6 @@ Route::controller(UserController::class)->prefix('panel')->group(function(){
     Route::get('user','show')->name('users.show');
     Route::get('user/delete','delete')->name('user.delete');
     Route::get('user/edit','edit')->name('user.edit');
+    Route::post('user/edit','update')->name('user.update');
 });
 Route::get('/panel',[AdminController::class,'index'])->name('panel');
