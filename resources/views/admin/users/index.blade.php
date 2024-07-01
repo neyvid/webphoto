@@ -56,9 +56,9 @@
               <td>{{ $user->email }}</td>
               <td>{{ $user->mobile }}</td>
               
-              <td><span class="badge {{ $user->status=='فعال'? "bg-danger" : "bg-success" }}">{{ $user->status }}</span></td>
+              <td><span style="cursor: pointer"  onclick="showCitiesOfState(this,{{$user->id}})" class="status badge {{ $user->status=='فعال'? "bg-success" : "bg-danger" }}">{{ $user->status }}</span></td>
               <td>
-                <a href="{{ route('user.edit').'?id='.$user->id }}"><span class="badge bg-warning">ویرایش</span></a>
+                <a  href="{{ route('user.edit').'?id='.$user->id }}"><span class="badge bg-warning">ویرایش</span></a>
                 <a href="{{ route('user.delete').'?id='.$user->id }}"><span class="badge bg-danger">حذف</span></a>
               </td>
             </tr>
@@ -73,5 +73,29 @@
     <!-- /.card -->
   </div>
 </div>
+<script>
+   function showCitiesOfState(tag,userId) {
+                                $.ajaxSetup({
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    }
+                                });
+                                
+                                $.get('user/status/change/'+userId, function (result) {
+                            
+                                   if($(tag).hasClass('bg-danger')){
+                                    $(tag).removeClass('bg-danger');
+                                    $(tag).addClass('bg-success');
+                                    $(tag).html('فعال');
+                                   }else{
+                                   $(tag).removeClass('bg-success');
+                                   $(tag).addClass('bg-danger');
+                                   $(tag).html('غیر فعال');
+                                   }
+                                   console.log(result);
+                                });
 
+                            }
+
+</script>
 @endsection

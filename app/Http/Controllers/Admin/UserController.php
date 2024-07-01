@@ -47,4 +47,16 @@ class UserController extends Controller
         return $data;
         $this->userRepo->update($request->id,$data);
     }
+    public function changeUserStatus($id){
+        $user=$this->userRepo->find($id);
+        $userStatus=$user->status;
+        if($userStatus=='فعال'){
+            $this->userRepo->update($id,['status'=>'غیرفعال']);   
+            return 'bg-danger';
+
+        }else{
+            $this->userRepo->update($id,['status'=>'فعال']);   
+            return 'bg-danger';
+        }
+    }
 }
