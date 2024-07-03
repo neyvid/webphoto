@@ -13,7 +13,13 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-
+<script>
+      $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+</script>
 <!-- jQuery -->
 <script src={{ asset("/plugins/jquery/jquery.min.js") }}></script>
 <!-- jQuery UI 1.11.4 -->
@@ -48,5 +54,7 @@
 <script src={{ asset('/dist/js/demo.js') }}></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src={{ asset('/dist/js/pages/dashboard.js') }}></script>
+{{-- @vite( 'resources/js/app.js' ) --}}
+
 </body>
 </html>
