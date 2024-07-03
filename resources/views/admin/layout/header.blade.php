@@ -10,7 +10,14 @@
 
   <!-- Google Font: Source Sans Pro -->
   		@vite( 'resources/js/app.js' )
+    <script>
+        $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
     
+    </script>
     
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">

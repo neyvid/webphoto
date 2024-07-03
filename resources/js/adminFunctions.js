@@ -1,10 +1,5 @@
-export function showCitiesOfState(tag,userId) {
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    
+export function changeUserStatus(tag,userId) {
+  
     $.get('user/status/change/'+userId, function (result) {
 
        if($(tag).hasClass('bg-danger')){
