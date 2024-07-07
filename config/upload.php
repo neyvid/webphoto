@@ -2,7 +2,7 @@
 
 return[
     'path'=>public_path('photo/client/upload'),
-    'url'=>url('photo/client/upload'),
+    // 'url'=>url('photo/client/upload'),
     'whitelist'=>[
         'image/jpeg',
         'image/png',

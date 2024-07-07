@@ -58,7 +58,7 @@
               
               <td><span style="cursor: pointer"  onclick="changeUserStatus(this,{{$user->id}})" class="status badge {{ $user->status=='فعال'? "bg-success" : "bg-danger" }}">{{ $user->status }}</span></td>
               <td>
-                <a  href="{{ route('user.edit').'?id='.$user->id }}"><span class="badge bg-warning">ویرایش</span></a>
+                <a href="{{ route('user.edit').'?id='.$user->id }}"><span class="badge bg-warning">ویرایش</span></a>
                 <a href="{{ route('user.delete').'?id='.$user->id }}"><span class="badge bg-danger">حذف</span></a>
               </td>
             </tr>

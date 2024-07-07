@@ -35,6 +35,8 @@ Route::controller(UserController::class)->prefix('panel')->group(function(){
     Route::get('user/edit','edit')->name('user.edit');
     Route::post('user/edit','update')->name('user.update');
     Route::get('user/status/change/{id}','changeUserStatus')->name('changeUserStatus');
+    Route::get('user/create','userCreatForm')->name('user.create.form');
+    Route::post('user/create','userCreate')->name('user.create');
     
 });
 Route::get('/panel',[AdminController::class,'index'])->name('panel');

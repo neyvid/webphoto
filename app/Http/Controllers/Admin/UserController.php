@@ -59,5 +59,30 @@ class UserController extends Controller
             return 'bg-danger';
         }
     }
+    public function userCreatForm(){
+        return view('admin.users.create');
+    }
+    public function userCreate(Request $request){
+        $checkISEmailExist=$this->userRepo->findBy(['email'=>$request->input('email')]);
+        $checkISMobileExist=$this->userRepo->findBy(['mobile'=>$request->input('mobile')]);
+        if($checkISEmailExist || $checkISMobileExist){
+            return 'این ایمیل و یا موبایل در سیستم موجودهست';
+        }
+        $userData=[            
+            'name'=>$request->input('name'),
+            'lastname'=>$request->input('lastname'),
+            'email'=>$request->input('email'),
+            'phone'=>$request->input('phone'),
+            'mobile'=>$request->input('mobile'),
+            'sex'=>$request->input('sex'),
+            'status'=>'فعال',
+            'password'=>123, //change it in product
+            'wallet'=>0,
+            'address'=>$request->input('address'),
+        ];
+       $userCreated=$this->userRepo->create($userData);
+
+       return redirect()->route('users.show');
+    }
 }
 
