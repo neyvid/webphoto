@@ -23,6 +23,7 @@
     "asynckit": "^0.4.0",
     "combined-stream": "^1.0.8",
     "delayed-stream": "^1.0.0",
+    "dropzone": "^6.0.0-beta.2",
     "esbuild": "^0.18.20",
     "follow-redirects": "^1.15.6",
     "form-data": "^4.0.0",

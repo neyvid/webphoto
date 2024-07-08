@@ -18,7 +18,7 @@ class userCreated extends Mailable
      *
      * @return void
      */
-    public function __construct(private $user)
+    public function __construct(private $user,private $password)
     {
         //
     }
@@ -44,7 +44,7 @@ class userCreated extends Mailable
     {
         return new Content(
             view: 'mail.admin.userCreated',
-            with: ['user' => $this->user],
+            with: ['user' => $this->user,'password'=>$this->password],
         );
     }
 

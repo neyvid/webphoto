@@ -73,21 +73,25 @@ class UserController extends Controller
         if($checkISEmailExist || $checkISMobileExist){
             return 'این ایمیل و یا شماره موبایل قبلا در سیستم ثبت نام کرده است';
         }
+        $password=Str::random(8);
         $userData=[            
             'name'=>$request->input('name'),
             'lastname'=>$request->input('lastname'),
             'email'=>$request->input('email'),
             'phone'=>$request->input('phone'),
+            'national_code'=>$request->input('national_code'),
             'mobile'=>$request->input('mobile'),
             'sex'=>$request->input('sex'),
             'status'=>'فعال',
-            'password'=>Str::random(8),
+            'password'=>Hash::make($password),
             'wallet'=>0,
             'address'=>$request->input('address'),
         ];
        $userCreated=$this->userRepo->create($userData);
-    
-       Mail::to($userCreated->email)->send(new userCreated($userCreated));
+       if($userCreated instanceof User){
+           Mail::to($userCreated->email)->send(new userCreated($userCreated,$password));
+            //implement send SMS
+       }
        return redirect()->route('users.show')->with('success','کاربر با موفقیت ثبت شد');
     }
 }

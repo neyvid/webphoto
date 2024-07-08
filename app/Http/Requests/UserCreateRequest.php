@@ -27,7 +27,8 @@ class UserCreateRequest extends FormRequest
             'name'=>'required',
             'lastname'=>'required',
             'email'=>'required|email:filter',
-            'mobile'=>'required|regex:/09(0[1-5]|1[0-9]|2[0-2]|3[0-9]|9[4|8|9])-?[0-9]{3}-?[0-9]{4}$/',
+            'national_code'=>'required',
+            'mobile'=>['required','regex:/09(0[1-5]|1[0-9]|2[0-2]|3[0-9]|9[4|8|9])-?[0-9]{3}-?[0-9]{4}$/'],
             'phone'=>'required',
             'sex'=>'required',
             'address'=>'required',
@@ -38,6 +39,7 @@ class UserCreateRequest extends FormRequest
         return [
             'name.required'=>'نام خود وارد نمایید',
             'lastname.required'=>'نام خانوادگی خود وارد نمایید',
+            'national_code.required'=>'کد ملی خود وارد نمایید',
             'email.required'=>'ایمیل خود وارد نمایید',
             'email.email'=>'ایمیل وارد شده صحیح نمی باشد',
             'mobile.required'=>'شماره همراه خود را وارد نمایید',
