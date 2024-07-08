@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Repositories\UserRepository\UserRepository;
-use Database\Factories\UserFactory;
-use Faker\Factory as FakerFactory;
-use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Faker\Factory as FakerFactory;
+use Database\Factories\UserFactory;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\UserCreateRequest;
+use App\Mail\userCreated;
+use Illuminate\Support\Facades\Hash;
+use App\Repositories\UserRepository\UserRepository;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -62,11 +67,11 @@ class UserController extends Controller
     public function userCreatForm(){
         return view('admin.users.create');
     }
-    public function userCreate(Request $request){
+    public function userCreate(UserCreateRequest $request){
         $checkISEmailExist=$this->userRepo->findBy(['email'=>$request->input('email')]);
         $checkISMobileExist=$this->userRepo->findBy(['mobile'=>$request->input('mobile')]);
         if($checkISEmailExist || $checkISMobileExist){
-            return 'این ایمیل و یا موبایل در سیستم موجودهست';
+            return 'این ایمیل و یا شماره موبایل قبلا در سیستم ثبت نام کرده است';
         }
         $userData=[            
             'name'=>$request->input('name'),
@@ -76,13 +81,14 @@ class UserController extends Controller
             'mobile'=>$request->input('mobile'),
             'sex'=>$request->input('sex'),
             'status'=>'فعال',
-            'password'=>123, //change it in product
+            'password'=>Str::random(8),
             'wallet'=>0,
             'address'=>$request->input('address'),
         ];
        $userCreated=$this->userRepo->create($userData);
-
-       return redirect()->route('users.show');
+    
+       Mail::to($userCreated->email)->send(new userCreated($userCreated));
+       return redirect()->route('users.show')->with('success','کاربر با موفقیت ثبت شد');
     }
 }
 

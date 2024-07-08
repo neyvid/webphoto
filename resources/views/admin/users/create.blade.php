@@ -5,6 +5,7 @@
 @section('content-header')
 ایجاد کاربر جدید
 @endsection
+
 @section('content-breadcrumb')
 <ol class="breadcrumb float-sm-right">
     <li class="breadcrumb-item"><a href="#">صفحه نخست</a></li>
@@ -12,6 +13,15 @@
   </ol>
 @endsection
 @section('main-content')
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <div class="row">
   <!-- left column -->
   <div class="col-md-12">
@@ -30,6 +40,9 @@
             <input type="text" name="name" class="form-control" id="name" placeholder="نام خود را وارد نمایید">
           </div>
           <div class="form-group">
+            @error('lastname')
+    <div class="alert alert-danger">{{ $message }}</div>
+@enderror
             <label for="lastname">نام خانوادگی</label>
             <input type="text" name="lastname" class="form-control" id="lastaname" placeholder="نام خانوادگی را وارد نمایید">
           </div>
