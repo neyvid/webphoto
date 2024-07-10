@@ -10,8 +10,10 @@ use Database\Factories\UserFactory;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserCreateRequest;
 use App\Mail\userCreated;
+use App\Models\Photo;
 use Illuminate\Support\Facades\Hash;
 use App\Repositories\UserRepository\UserRepository;
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Mail;
 
@@ -67,7 +69,8 @@ class UserController extends Controller
     public function userCreatForm(){
         return view('admin.users.create');
     }
-    public function userCreate(UserCreateRequest $request){
+    public function userCreate(Request $request){
+        return [$request->all(),$request->hasFile('files')];
         $checkISEmailExist=$this->userRepo->findBy(['email'=>$request->input('email')]);
         $checkISMobileExist=$this->userRepo->findBy(['mobile'=>$request->input('mobile')]);
         if($checkISEmailExist || $checkISMobileExist){
@@ -94,5 +97,22 @@ class UserController extends Controller
        }
        return redirect()->route('users.show')->with('success','کاربر با موفقیت ثبت شد');
     }
-}
+    public function create(Request $request){
+         // get dropzone image
+         if ($request->file('file')) {
+            $file = $request->file('file');
+            $filename = time().'_'.$file->getClientOriginalName();
+            $request->file->move('uploads/', $filename, 'public');
+       
+        }
+
+        // return the result
+         return response()->json(['success'=>'با موفقیت آپلود شد','filename'=>$filename]);
+    }
+   
+
+
+        
+} 
+
 
