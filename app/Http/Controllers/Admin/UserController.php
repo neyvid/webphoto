@@ -109,6 +109,9 @@ class UserController extends Controller
         // return the result
          return response()->json(['success'=>'با موفقیت آپلود شد','filename'=>$filename]);
     }
+    public function removeImage()  {
+        return 123;
+    }
    
 
 

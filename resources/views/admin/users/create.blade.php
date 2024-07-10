@@ -179,12 +179,22 @@
        
             done(); }
         },
+        
         removedfile: function(file) {
             file.previewElement.remove();
             console.log(this.fileNameUploaded);
+            $.ajaxSetup({
+  headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  }
+});
+            $.post('image/remove', function (result) {
+                
+                     console.log(result);
+                });
         },
         renameFile:function(file){
-            console.log(file);
+            file.fileNameUploaded='sa';
         },
        
         })

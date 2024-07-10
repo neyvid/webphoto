@@ -38,6 +38,7 @@ Route::controller(UserController::class)->prefix('panel')->group(function(){
     Route::get('user/create','userCreatForm')->name('user.create.form');
     Route::post('user/create','userCreate')->name('user.create');
     Route::post('user/image','create');
+    Route::post('user/image/remove','removeImage');
 
 });
 Route::get('/panel',[AdminController::class,'index'])->name('panel');
