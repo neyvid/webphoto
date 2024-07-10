@@ -1,3 +1,6 @@
+{{-- DropZone 6 --}}
+<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+
 @extends('admin.layout.master')
 @section('page-title')
     ایجاد کاربر
@@ -23,7 +26,7 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form method="POST" enctype="multipart/form-data">
+                <form  method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
@@ -102,7 +105,7 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputFile">فایل</label>
-                            <div class="input-group">
+                            {{-- <div class="input-group">
                                 <div class="custom-file">
                                     <input type="file" name="file" class="custom-file-input" id="exampleInputFile">
                                     <label class="custom-file-label" for="exampleInputFile">انتخاب فایل</label>
@@ -110,7 +113,9 @@
                                 <div class="input-group-append">
                                     <span class="input-group-text">بارگزاری</span>
                                 </div>
-                            </div>
+                            </div> --}}
+                            <div  class="dropzone"
+                            id="my-awesome-dropzone"></div>
                         </div>
                         <div class="form-check">
                             <input type="checkbox" class="form-check-input" id="exampleCheck1">
@@ -123,15 +128,104 @@
                         <button type="submit" class="btn btn-primary">ارسال</button>
                     </div>
                 </form>
+                <h5 id="message"></h5>
+
             </div>
             <!-- /.card -->
 
         </div>
     </div>
-<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
-    <form action="/file-upload"
-    class="dropzone"
-    id="my-awesome-dropzone"></form>
-  
+
+    <form action="/target" class="dropzone" id="my-great-dropzone"></form>
+
+    <script>
+        var fileNameUploaded;
+        const myDropzone=new Dropzone("#my-great-dropzone",{
+        paramName: "file", // The name that will be used to transfer the file
+        maxFilesize: 2, // MB
+        url: "/panel/user/image",
+        method: "POST",
+        addRemoveLinks: true,
+        dictRemoveFile: 'حذف تصویر',
+
+        headers: {
+        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+         },
+         maxfilesexceeded: function(file) {
+            this.removeFile(file);
+            // this.removeAllFiles(); 
+        },
+        sending: function (file, xhr, formData) {
+            $('#message').text('Image Uploading...');
+        },
+        success: function (file, response) {
+            $('#message').text(response.success);
+            console.log(response.success);
+            this.fileNameUploaded=response.filename;
+            console.log(file);
+        },
+        error: function (file, response) {
+            $('#message').text('Something Went Wrong! '+response);
+            console.log(response);
+            return false;
+        },
+        accept: function(file, done,response) {
+          if (file.name == "justinbieber.jpg") {
+            done("Naha, you don't.");
+          
+          }
+          else { 
+        
+       
+            done(); }
+        },
+        removedfile: function(file) {
+            file.previewElement.remove();
+            console.log(this.fileNameUploaded);
+        },
+        renameFile:function(file){
+            console.log(file);
+        },
+       
+        })
+      
+    </script>
+
+  {{-- <script>
+const allowMaxFilesize = 5;
+const allowMaxFiles = 5;
+const myDropzone = new Dropzone("#my-awesome-dropzone", {
+    url: "/panel/user/image",
+    method: "POST",
+    paramName: "files",
+    autoProcessQueue: false,
+    acceptedFiles: ".jpeg,.jpg,.png,.gif",
+    maxFiles: allowMaxFiles,
+    maxFilesize: allowMaxFilesize, // MB
+    uploadMultiple: true,
+    parallelUploads: 100, // use it with uploadMultiple
+    createImageThumbnails: true,
+    thumbnailWidth: 120,
+    thumbnailHeight: 120,
+    addRemoveLinks: true,
+    timeout: 180000,
+    dictRemoveFileConfirmation: "Are you Sure?", // ask before removing file
+    // Language Strings
+    dictFileTooBig: `File is to big. Max allowed file size is ${allowMaxFilesize}mb`,
+    dictInvalidFileType: "Invalid File Type",
+    dictCancelUpload: "Cancel",
+    dictRemoveFile: "Remove",
+    dictMaxFilesExceeded: `Only ${allowMaxFiles} files are allowed`,
+    dictDefaultMessage: "Drop files here to upload",
+    headers: {
+        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+    },
+}
+
+);
+
+
+   
+  </script> --}}
  
 @endsection

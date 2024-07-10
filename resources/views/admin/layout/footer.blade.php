@@ -4,6 +4,7 @@
     <div class="float-right d-none d-sm-inline-block">
       <b>نسخه</b> 3.2.0
     </div>
+    
   </footer>
 
   <!-- Control Sidebar -->
@@ -28,6 +29,8 @@
 <script>
   $.widget.bridge('uibutton', $.ui.button)
 </script>
+
+
 <!-- Bootstrap 4 -->
 <script src={{ asset('/plugins/bootstrap/js/bootstrap.bundle.min.js') }}></script>
 <!-- ChartJS -->
