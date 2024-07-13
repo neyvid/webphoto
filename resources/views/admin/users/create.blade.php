@@ -26,7 +26,7 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form  method="POST" enctype="multipart/form-data">
+                <form method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
@@ -105,17 +105,8 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputFile">فایل</label>
-                            {{-- <div class="input-group">
-                                <div class="custom-file">
-                                    <input type="file" name="file" class="custom-file-input" id="exampleInputFile">
-                                    <label class="custom-file-label" for="exampleInputFile">انتخاب فایل</label>
-                                </div>
-                                <div class="input-group-append">
-                                    <span class="input-group-text">بارگزاری</span>
-                                </div>
-                            </div> --}}
-                            <div  class="dropzone"
-                            id="my-awesome-dropzone"></div>
+
+                            <div class="dropzone" id="myawesomedropzone"></div>
                         </div>
                         <div class="form-check">
                             <input type="checkbox" class="form-check-input" id="exampleCheck1">
@@ -136,72 +127,73 @@
         </div>
     </div>
 
-    <form action="/target" class="dropzone" id="my-great-dropzone"></form>
 
     <script>
         var fileNameUploaded;
-        const myDropzone=new Dropzone("#my-great-dropzone",{
-        paramName: "file", // The name that will be used to transfer the file
-        maxFilesize: 2, // MB
-        url: "/panel/user/image",
-        method: "POST",
-        addRemoveLinks: true,
-        dictRemoveFile: 'حذف تصویر',
+        const myDropzone = new Dropzone("#myawesomedropzone", {
+            paramName: "file", // The name that will be used to transfer the file
+            maxFilesize: 2, // MB
+            url: "/panel/user/image",
+            method: "POST",
+            addRemoveLinks: true,
+            dictRemoveFile: 'حذف تصویر',
 
-        headers: {
-        'X-CSRF-TOKEN': "{{ csrf_token() }}"
-         },
-         maxfilesexceeded: function(file) {
-            this.removeFile(file);
-            // this.removeAllFiles(); 
-        },
-        sending: function (file, xhr, formData) {
-            $('#message').text('Image Uploading...');
-        },
-        success: function (file, response) {
-            $('#message').text(response.success);
-            console.log(response.success);
-            this.fileNameUploaded=response.filename;
-            console.log(file);
-        },
-        error: function (file, response) {
-            $('#message').text('Something Went Wrong! '+response);
-            console.log(response);
-            return false;
-        },
-        accept: function(file, done,response) {
-          if (file.name == "justinbieber.jpg") {
-            done("Naha, you don't.");
-          
-          }
-          else { 
-        
-       
-            done(); }
-        },
-        
-        removedfile: function(file) {
-            file.previewElement.remove();
-            console.log(this.fileNameUploaded);
-            $.ajaxSetup({
-  headers: {
-    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-  }
-});
-            $.post('image/remove', function (result) {
-                
-                     console.log(result);
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            },
+            maxfilesexceeded: function(file) {
+                this.removeFile(file);
+                // this.removeAllFiles(); 
+            },
+            sending: function(file, xhr, formData) {
+                $('#message').text('Image Uploading...');
+            },
+            success: function(file, response) {
+                $('#message').text(response.success);
+                {{--  console.log(response.success);  --}}
+                {{--  this.fileNameUploaded=response.filename;  --}}
+                console.log(response);
+            },
+            error: function(file, response) {
+                $('#message').text('Something Went Wrong! ' + response);
+                {{--  console.log(response);  --}}
+                return false;
+            },
+            accept: function(file, done, response) {
+                if (file.name == "justinbieber.jpg") {
+                    done("Naha, you don't.");
+
+                } else {
+
+
+                    done();
+                }
+            },
+
+            removedfile: function(file) {
+                console.log(file.upload.filename);
+                file.previewElement.remove();
+                console.log(this.fileNameUploaded);
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
                 });
-        },
-        renameFile:function(file){
-            file.fileNameUploaded='sa';
-        },
-       
+                $.post('image/remove', function(result) {
+
+                    console.log(result);
+                });
+            },
+            renameFile: function(file) {
+                var dt = new Date();
+                var time = dt.getTime();
+                return time + file.name;
+            },
+
         })
-      
     </script>
 
-  {{-- <script>
+    {{-- <script>
 const allowMaxFilesize = 5;
 const allowMaxFiles = 5;
 const myDropzone = new Dropzone("#my-awesome-dropzone", {
@@ -237,5 +229,4 @@ const myDropzone = new Dropzone("#my-awesome-dropzone", {
 
    
   </script> --}}
- 
 @endsection

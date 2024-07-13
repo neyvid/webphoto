@@ -101,7 +101,8 @@ class UserController extends Controller
          // get dropzone image
          if ($request->file('file')) {
             $file = $request->file('file');
-            $filename = time().'_'.$file->getClientOriginalName();
+            $filename =$file->getClientOriginalName();
+     
             $request->file->move('uploads/', $filename, 'public');
        
         }
