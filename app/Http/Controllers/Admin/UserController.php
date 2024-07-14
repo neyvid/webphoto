@@ -13,9 +13,14 @@ use App\Mail\userCreated;
 use App\Models\Photo;
 use Illuminate\Support\Facades\Hash;
 use App\Repositories\UserRepository\UserRepository;
+use Faker\Core\File;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Http\File as HttpFile;
+use Illuminate\Support\Facades\Facade;
+use Illuminate\Support\Facades\File as FacadesFile;
 use Illuminate\Support\Facades\Mail;
+use PHPUnit\Framework\Constraint\FileExists;
 
 class UserController extends Controller
 {
@@ -70,7 +75,7 @@ class UserController extends Controller
         return view('admin.users.create');
     }
     public function userCreate(Request $request){
-        return [$request->all(),$request->hasFile('files')];
+        return [$request->all(),$request->file('file')];
         $checkISEmailExist=$this->userRepo->findBy(['email'=>$request->input('email')]);
         $checkISMobileExist=$this->userRepo->findBy(['mobile'=>$request->input('mobile')]);
         if($checkISEmailExist || $checkISMobileExist){
@@ -110,8 +115,14 @@ class UserController extends Controller
         // return the result
          return response()->json(['success'=>'با موفقیت آپلود شد','filename'=>$filename]);
     }
-    public function removeImage()  {
-        return 123;
+    public function removeImage(Request $request)  {
+        if(file_exists(public_path()."/uploads/".$request->input('fileName'))){
+             unlink(public_path()."/uploads/".$request->input('fileName'));
+             return 'file deleted successfully';
+        }
+        return 'file not deleted ';
+
+        
     }
    
 

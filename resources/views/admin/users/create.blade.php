@@ -26,7 +26,7 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form method="POST" enctype="multipart/form-data">
+                <form method="POST" id="theform" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
@@ -130,14 +130,18 @@
 
     <script>
         var fileNameUploaded;
-        const myDropzone = new Dropzone("#myawesomedropzone", {
+        var myDropzone = new Dropzone("#myawesomedropzone", {
             paramName: "file", // The name that will be used to transfer the file
             maxFilesize: 2, // MB
             url: "/panel/user/image",
             method: "POST",
+            
             addRemoveLinks: true,
             dictRemoveFile: 'حذف تصویر',
-
+            uploadMultiple: false,
+            parallelUploads: 1,
+            maxFiles: 4,
+   
             headers: {
                 'X-CSRF-TOKEN': "{{ csrf_token() }}"
             },
@@ -150,13 +154,11 @@
             },
             success: function(file, response) {
                 $('#message').text(response.success);
-                {{--  console.log(response.success);  --}}
-                {{--  this.fileNameUploaded=response.filename;  --}}
                 console.log(response);
             },
             error: function(file, response) {
                 $('#message').text('Something Went Wrong! ' + response);
-                {{--  console.log(response);  --}}
+
                 return false;
             },
             accept: function(file, done, response) {
@@ -164,8 +166,6 @@
                     done("Naha, you don't.");
 
                 } else {
-
-
                     done();
                 }
             },
@@ -173,13 +173,15 @@
             removedfile: function(file) {
                 console.log(file.upload.filename);
                 file.previewElement.remove();
-                console.log(this.fileNameUploaded);
+
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
-                $.post('image/remove', function(result) {
+                $.post('image/remove', {
+                    'fileName': file.upload.filename
+                }, function(result) {
 
                     console.log(result);
                 });
@@ -187,46 +189,10 @@
             renameFile: function(file) {
                 var dt = new Date();
                 var time = dt.getTime();
-                return time + file.name;
+                return time + "saasas" + file.name;
             },
 
-        })
+        });
+       
     </script>
-
-    {{-- <script>
-const allowMaxFilesize = 5;
-const allowMaxFiles = 5;
-const myDropzone = new Dropzone("#my-awesome-dropzone", {
-    url: "/panel/user/image",
-    method: "POST",
-    paramName: "files",
-    autoProcessQueue: false,
-    acceptedFiles: ".jpeg,.jpg,.png,.gif",
-    maxFiles: allowMaxFiles,
-    maxFilesize: allowMaxFilesize, // MB
-    uploadMultiple: true,
-    parallelUploads: 100, // use it with uploadMultiple
-    createImageThumbnails: true,
-    thumbnailWidth: 120,
-    thumbnailHeight: 120,
-    addRemoveLinks: true,
-    timeout: 180000,
-    dictRemoveFileConfirmation: "Are you Sure?", // ask before removing file
-    // Language Strings
-    dictFileTooBig: `File is to big. Max allowed file size is ${allowMaxFilesize}mb`,
-    dictInvalidFileType: "Invalid File Type",
-    dictCancelUpload: "Cancel",
-    dictRemoveFile: "Remove",
-    dictMaxFilesExceeded: `Only ${allowMaxFiles} files are allowed`,
-    dictDefaultMessage: "Drop files here to upload",
-    headers: {
-        'X-CSRF-TOKEN': "{{ csrf_token() }}"
-    },
-}
-
-);
-
-
-   
-  </script> --}}
 @endsection
