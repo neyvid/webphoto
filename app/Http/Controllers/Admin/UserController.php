@@ -13,10 +13,12 @@ use App\Mail\userCreated;
 use App\Models\Photo;
 use Illuminate\Support\Facades\Hash;
 use App\Repositories\UserRepository\UserRepository;
+use Carbon\Carbon;
 use Faker\Core\File;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Http\File as HttpFile;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\Facades\File as FacadesFile;
 use Illuminate\Support\Facades\Mail;
@@ -103,13 +105,16 @@ class UserController extends Controller
        return redirect()->route('users.show')->with('success','کاربر با موفقیت ثبت شد');
     }
     public function create(Request $request){
+
+
          // get dropzone image
          if ($request->file('file')) {
-            $file = $request->file('file');
-            $filename =$file->getClientOriginalName();
-     
-            $request->file->move('uploads/', $filename, 'public');
-       
+            foreach($request->file('file') as $file){
+                $fileExtension=$file->getClientOriginalExtension();
+                $newNameGenerated=Carbon::now('Asia/Tehran')->format('Y-m-d').'_'.Str::random(40);
+                $newFileName=$newNameGenerated.'.'.$fileExtension;
+                $file->move('uploads/', $newFileName);
+            }
         }
 
         // return the result

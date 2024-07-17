@@ -17,6 +17,7 @@
 @endsection
 @section('main-content')
     <div class="row">
+
         <!-- left column -->
         <div class="col-md-12">
             <!-- general form elements -->
@@ -26,7 +27,7 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form method="POST" id="theform" enctype="multipart/form-data">
+                <form id='frm' method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
@@ -103,96 +104,131 @@
                                 <span style="color: red">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="form-group">
-                            <label for="exampleInputFile">فایل</label>
-
-                            <div class="dropzone" id="myawesomedropzone"></div>
-                        </div>
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                            <label class="form-check-label" for="exampleCheck1">مرا انتخاب کنید</label>
-                        </div>
+                        <div class="dropzone" id="uploadform"></div>
                     </div>
                     <!-- /.card-body -->
+                    <div class="previews"></div>
 
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">ارسال</button>
+                        <button class="btn btn-primary" id="formSubmit">ارسال</button>
                     </div>
                 </form>
-                <h5 id="message"></h5>
 
             </div>
             <!-- /.card -->
 
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
 
 
     <script>
-        var fileNameUploaded;
-        var myDropzone = new Dropzone("#myawesomedropzone", {
-            paramName: "file", // The name that will be used to transfer the file
-            maxFilesize: 2, // MB
+        /**
+         * Form on submit
+         */
+        Dropzone.autoDiscover = false;
+
+
+
+
+        var myDropzone = new Dropzone("#uploadform", {
             url: "/panel/user/image",
             method: "POST",
-            
+            paramName: "file",
+            autoProcessQueue: false,
+            uploadMultiple: true,
+            parallelUploads: 100,
+            maxFiles: 100,
+            maxFiles: 15,
+            maxFilesize: 5,
+            acceptedFiles: ".png, .jpg, .gif, .pdf, .doc",
             addRemoveLinks: true,
-            dictRemoveFile: 'حذف تصویر',
-            uploadMultiple: false,
-            parallelUploads: 1,
-            maxFiles: 4,
-   
             headers: {
-                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            maxfilesexceeded: function(file) {
-                this.removeFile(file);
-                // this.removeAllFiles(); 
-            },
-            sending: function(file, xhr, formData) {
-                $('#message').text('Image Uploading...');
-            },
-            success: function(file, response) {
-                $('#message').text(response.success);
-                console.log(response);
-            },
-            error: function(file, response) {
-                $('#message').text('Something Went Wrong! ' + response);
+            init: function() {
+                var myDropzone = this;
 
-                return false;
-            },
-            accept: function(file, done, response) {
-                if (file.name == "justinbieber.jpg") {
-                    done("Naha, you don't.");
+                // First change the button to actually tell Dropzone to process the queue.
+                // this.element.querySelector("button[type=submit]").addEventListener("click", function(e) {
+                //     // Make sure that the form isn't actually being sent.
+                //     e.preventDefault();
+                //     e.stopPropagation();
+                //     myDropzone.processQueue();
+                // });
 
-                } else {
-                    done();
-                }
-            },
+                // Listen to the sendingmultiple event. In this case, it's the sendingmultiple event instead
+                // of the sending event because uploadMultiple is set to true.
+                this.on("addedfile", function() {
 
-            removedfile: function(file) {
-                console.log(file.upload.filename);
-                file.previewElement.remove();
-
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
+                    // Gets triggered when the form is actually being sent.
+                    // Hide the success button or the complete form.
+                    console.log('addedfile');
                 });
-                $.post('image/remove', {
-                    'fileName': file.upload.filename
-                }, function(result) {
+                this.on("sendingmultiple", function() {
 
-                    console.log(result);
+
+                    // Gets triggered when the form is actually being sent.
+                    // Hide the success button or the complete form.
+                    console.log('sendingmultiple');
+                });
+                this.on("successmultiple", function(files, response) {
+                    // Gets triggered when the files have successfully been sent.
+                    // Redirect user or notify of success.
+                    console.log('successmultiple');
+
+                });
+                this.on("successmultiple", function(files, response) {
+                    // Gets triggered when the files have successfully been sent.
+                    // Redirect user or notify of success.
+                    console.log(response);
+
+                });
+                this.on("errormultiple", function(files, response) {
+                    // Gets triggered when there was an error sending the files.
+                    // Maybe show form again, and notify user of error
+                    console.log('errormultiple');
+
                 });
             },
-            renameFile: function(file) {
-                var dt = new Date();
-                var time = dt.getTime();
-                return time + "saasas" + file.name;
-            },
+            // success: function(file, response) {
+            //     // hide form and show success message
+            //     $('#formDropzone').fadeOut(600);
+            //     setTimeout(function() {
+            //         $('#successMessage').removeClass('d-none');
+            //     }, 600);
+            // }
+
 
         });
-       
+        $('#formSubmit').on('click', function(event) {
+
+            event.preventDefault();
+
+            var $this = $(this);
+
+            // show submit button spinner
+            $this.children('.spinner-border').removeClass('d-none');
+
+            // validate form & submit if valid
+            if ($('#uploadform')[0].checkValidity() === false) {
+                event.stopPropagation();
+
+                // show error messages & hide button spinner    
+                $('#uploadform').addClass('was-validated');
+                $this.children('.spinner-border').addClass('d-none');
+
+                // if dropzone is empty show error message
+                if (!myDropzone.getQueuedFiles().length > 0) {
+                    $('.dropzone-drag-area').addClass('is-invalid').next('.invalid-feedback').show();
+                }
+            } else {
+            console.log('sdas');
+            myDropzone.processQueue();
+            $('#frm').submit();
+            }
+        });
     </script>
 @endsection
