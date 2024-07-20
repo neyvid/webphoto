@@ -105,8 +105,8 @@ class UserController extends Controller
        return redirect()->route('users.show')->with('success','کاربر با موفقیت ثبت شد');
     }
     public function create(Request $request){
-
-
+        
+        return response()->json([$request->file('file')->getClientOriginalExtension(),$request->all()]);
          // get dropzone image
          if ($request->file('file')) {
             foreach($request->file('file') as $file){
