@@ -32,6 +32,7 @@ class UserCreateRequest extends FormRequest
             'phone'=>'required',
             'sex'=>'required',
             'address'=>'required',
+            'file'=>'required',
         ];
     }
     public function messages()
@@ -47,6 +48,7 @@ class UserCreateRequest extends FormRequest
             'phone.required'=>'شماره تلفن ثابت خود وارد نمایید',
             'sex.required'=>'جسنیت خود وارد نمایید.',
             'address.required'=>'آدرس پستی خود را وارد نمایید',
+            'file.required'=>'وارد نمودن حداقل یک تصویر الزامی می باشد',
         ];
     }
 }

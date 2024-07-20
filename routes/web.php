@@ -37,7 +37,7 @@ Route::controller(UserController::class)->prefix('panel')->group(function(){
     Route::get('user/status/change/{id}','changeUserStatus')->name('changeUserStatus');
     Route::get('user/create','userCreatForm')->name('user.create.form');
     Route::post('user/create','userCreate')->name('user.create');
-    Route::post('user/image','create');
+    // Route::post('user/image','create');
     Route::post('user/image/remove','removeImage');
 
 });

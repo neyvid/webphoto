@@ -27,12 +27,12 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form  id='formDropzone' method="POST" enctype="multipart/form-data">
+                <form id='formDropzone' method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
-                       
+
                         <div class="form-group">
-                           
+
                             <label class="form-label text-muted opacity-75 fw-medium" for="name">نام</label>
 
                             <input type="text" name="name" class="form-control" id="name"
@@ -44,7 +44,7 @@
                         </div>
                         <div class="form-group">
                             <label class="form-label text-muted opacity-75 fw-medium" for="lastaname">نام خانوادگی</label>
-            
+
                             <input type="text" name="lastname" class="form-control" id="lastaname"
                                 placeholder="نام خانوادگی را وارد نمایید" required>
                             @error('lastname')
@@ -116,17 +116,18 @@
                         </div>
                         <div class="form-group">
                             <label for="address">آدرس</label>
-                            <textarea type="text" name="address" class="form-control" id="national_code" placeholder="آدرس خود را وارد نمایید" required></textarea>
+                            <textarea type="text" name="address" class="form-control" id="national_code" placeholder="آدرس خود را وارد نمایید"
+                                required></textarea>
                             @error('address')
                                 <span style="color: red">{{ $message }}</span>
                             @enderror
                             <div class="invalid-feedback fw-bold">وارد نمودن آدرس الزامی می باشد</div>
                         </div>
 
-                        <div class="form-group ">
+                        <div class="form-group dropzone">
                             <label class="form-label text-muted opacity-75 fw-medium" for="formImage">Image</label>
-                            <div class="dropzone-drag-area form-control" id="previews">
-                                <div class="dz-message text-muted opacity-50" data-dz-message>
+                            <div class="dropzone-drag-area form-control dropzone" id="previews">
+                                <div class="dz-message text-muted opacity-50 " data-dz-message>
                                     <span>Drag file here to upload</span>
                                 </div>
                                 <div class="d-none" id="dzPreviewContainer">
@@ -134,13 +135,6 @@
                                         <div class="dz-photo">
                                             <img class="dz-thumbnail" data-dz-thumbnail>
                                         </div>
-                                        <button class="dz-delete border-0 p-0" type="button" data-dz-remove>
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="times">
-                                                <path fill="#FFFFFF"
-                                                    d="M13.41,12l4.3-4.29a1,1,0,1,0-1.42-1.42L12,10.59,7.71,6.29A1,1,0,0,0,6.29,7.71L10.59,12l-4.3,4.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L12,13.41l4.29,4.3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42Z">
-                                                </path>
-                                            </svg>
-                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -149,7 +143,7 @@
 
                     </div>
                     <!-- /.card-body -->
-                    <div class="previews"></div>
+
 
                     <div class="card-footer">
                         <button class="btn btn-primary" id="formSubmit">ارسال</button>
@@ -163,9 +157,8 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/min/dropzone.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/min/dropzone.min.js"></script>
 
     <script>
         /**
@@ -176,13 +169,12 @@
 
 
         $('#formDropzone').dropzone({
-            previewTemplate: $('#dzPreviewContainer').html(),
-            url: '/panel/user/image',
-            method:'POST',
+
+            url: '/panel/user/create',
+            method: 'POST',
             addRemoveLinks: true,
             autoProcessQueue: false,
-            uploadMultiple: false,
-            parallelUploads: 1,
+            parallelUploads: 100,
             uploadMultiple: true,
             acceptedFiles: '.jpeg, .jpg, .png, .gif',
             thumbnailWidth: 900,
@@ -199,6 +191,7 @@
                 // when file is dragged in
                 this.on('addedfile', function(file) {
                     $('.dropzone-drag-area').removeClass('is-invalid').next('.invalid-feedback').hide();
+
                 });
                 // First change the button to actually tell Dropzone to process the queue.
                 // this.element.querySelector("button[type=submit]").addEventListener("click", function(e) {
@@ -221,7 +214,6 @@
 
                     // Gets triggered when the form is actually being sent.
                     // Hide the success button or the complete form.
-                    console.log('sendingmultiple');
                 });
                 this.on("successmultiple", function(files, response) {
                     // Gets triggered when the files have successfully been sent.
@@ -280,3 +272,11 @@
         });
     </script>
 @endsection
+<style>
+    div #previews {
+        display: inline-table;
+    }
+    textarea{
+        background-position: left calc(.375em + .1875rem) center !important
+    }
+</style>
