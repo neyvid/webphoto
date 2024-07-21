@@ -17,8 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-//Route OF FRONT
+//Route OF FRONT`
 Route::get('/',[HomeController::class,'index'])->name('home');
 Route::controller(FrontUserController::class)->group(function(){
     Route::get('/login','showLogin')->name('login');

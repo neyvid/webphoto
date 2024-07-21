@@ -4,7 +4,9 @@
 @endsection
 @section('content-header')
 مدیریت کاربران
+<a class="btn btn-success" href={{ route('user.create.form') }}>ساخت کاربر جدید</a>
 @endsection
+
 @section('content-breadcrumb')
 <ol class="breadcrumb float-sm-right">
     <li class="breadcrumb-item"><a href="#">صفحه نخست</a></li>
@@ -12,6 +14,7 @@
   </ol>
 @endsection
 @section('main-content')
+
 <div class="row">
   <div class="col-12">
     <div class="card">

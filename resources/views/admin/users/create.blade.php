@@ -7,6 +7,8 @@
 @endsection
 @section('content-header')
     ایجاد کاربر جدید
+    <a class="btn btn-success" href={{ route('users.show') }}>مشاهده کاربران</a>
+
 @endsection
 
 @section('content-breadcrumb')
