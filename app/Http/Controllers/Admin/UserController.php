@@ -131,7 +131,7 @@ class UserController extends Controller
             $newNameGenerated = Carbon::now('Asia/Tehran')->format('Y-m-d') . '_' . Str::random(40);
             $newFileName = $newNameGenerated . '.' . $fileExtension;
             $imageSaved=$file->move('uploads/'.$userCreated->id.'/', $newFileName);
-            Image::make($imageSaved)->insert('uploads/FOOTER.jpg','center',0,0)->opacity(40)->save($imageSaved);
+            Image::make($imageSaved)->insert('uploads/FOOTER.jpg','center',0,0)->resize(800,800)->save($imageSaved);
 
             $this->photoRepo->create([
                 'name' => $newFileName,
