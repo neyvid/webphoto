@@ -1,3 +1,4 @@
+@import url('../../node_modules/dropzone/dist/dropzone.css'); 
 @font-face {
     font-family: vazir;
     src: url('/public/fonts/fonts/vazir/Vazirmatn-Regular.ttf');

@@ -2,32 +2,32 @@
     <strong>کپی رایت &copy; 2014-2021 <a href="https://aminarjmand.com">امین ارجمند | Amin Arjmand</a>.</strong>
     تمام حقوق محفوظ می باشد.
     <div class="float-right d-none d-sm-inline-block">
-      <b>نسخه</b> 3.2.0
+        <b>نسخه</b> 3.2.0
     </div>
-    
-  </footer>
 
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
+</footer>
+
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
+</aside>
+<!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
 <script>
-      $.ajaxSetup({
+    $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
 </script>
 <!-- jQuery -->
-<script src={{ asset("/plugins/jquery/jquery.min.js") }}></script>
+<script src={{ asset('/plugins/jquery/jquery.min.js') }}></script>
 <!-- jQuery UI 1.11.4 -->
 <script src={{ asset('/plugins/jquery-ui/jquery-ui.min.js') }}></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
-  $.widget.bridge('uibutton', $.ui.button)
+    $.widget.bridge('uibutton', $.ui.button)
 </script>
 
 
@@ -57,7 +57,9 @@
 <script src={{ asset('/dist/js/demo.js') }}></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src={{ asset('/dist/js/pages/dashboard.js') }}></script>
-{{-- @vite( 'resources/js/app.js' ) --}}
+
+@yield('Customscript')
 
 </body>
+
 </html>

@@ -22,7 +22,7 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form method="POST" enctype="multipart/form-data">
+                <form method="POST" action={{ route('user.update',['id'=>$user->id]) }} enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
@@ -74,14 +74,16 @@
                             <textarea type="text" name="address" class="form-control" id="national_code" placeholder="آدرس خود را وارد نمایید">{{ $user->address }}</textarea>
                         </div>
                         <div class="row">
-                        @foreach ($user->photos as $userPhoto)
-                            <div class="col col-sm-2 text-center">
-                                <img src={{ asset('uploads/' . $user->id . '/' . $userPhoto->name) }} width="100"
-                                    height="100" alt="">
-                                    <a href={{ route('login', ['id'=>$userPhoto->id]) }} class="d-block">حذف تصویر</a>
-                            </div>
-                        @endforeach
-                      </div>
+                            @foreach ($user->photos as $userPhoto)
+                                <div class="col col-sm-2 text-center">
+                                    <img src={{ asset('uploads/' . $user->id . '/' . $userPhoto->name) }} width="100"
+                                        height="100" alt="">
+                                    <a onclick="userImageRemove(event,this)"
+                                        href={{ route('user.remove.image', ['imageId' => $userPhoto->id]) }}
+                                        class="d-block">حذف تصویر</a>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
 
 
@@ -98,4 +100,28 @@
 
     </div>
     </div>
+@section('Customscript')
+    <script>
+        function userImageRemove(e, tag) {
+            e.preventDefault();
+            let hrefOfTag = $(tag).attr('href');
+            Swal.fire({
+                title: "آیا از حذف تصویر اطمینان د ارید؟",
+                text: "!!با حذف تصویر ،برگشت تصویر امکان پذیر نخواهد بود",
+                icon: "warning",
+                cancelButtonText:'خیر',
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "بله،مطمئن هستم!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = hrefOfTag;
+
+                }
+            });
+        }
+    </script>
+@endsection
+
 @endsection

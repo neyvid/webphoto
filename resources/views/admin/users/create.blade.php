@@ -1,5 +1,3 @@
-{{-- DropZone 6 --}}
-<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
 
 @extends('admin.layout.master')
 @section('page-title')
@@ -160,8 +158,10 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/min/dropzone.min.js"></script>
-
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/min/dropzone.min.js"></script> --}}
+    <script src={{ asset('dropzone.js') }}></script>
+    
+   
     <script>
         /**
          * Form on submit

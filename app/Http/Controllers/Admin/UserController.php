@@ -72,17 +72,18 @@ class UserController extends Controller
         return view('admin.users.update', compact('user'));
     }
     public function update(Request $request)
-    {
-        $data = [
+    {   
+    
+        
+            $data = [
             'name' => $request->name,
             'lastname' => $request->lastname,
             'sex' => $request->sex,
             'address' => $request->address,
             'phone' => $request->phone
         ];
-        return $request->hasFile('file');
-        return $data;
         $this->userRepo->update($request->id, $data);
+        return redirect()->route('users.show');
     }
     public function changeUserStatus($id)
     {
@@ -131,7 +132,7 @@ class UserController extends Controller
             $newNameGenerated = Carbon::now('Asia/Tehran')->format('Y-m-d') . '_' . Str::random(40);
             $newFileName = $newNameGenerated . '.' . $fileExtension;
             $imageSaved=$file->move('uploads/'.$userCreated->id.'/', $newFileName);
-            Image::make($imageSaved)->insert('uploads/FOOTER.jpg','center',0,0)->resize(800,800)->save($imageSaved);
+            Image::make($imageSaved)->resize(800,800)->insert('uploads/images.png')->save($imageSaved);
 
             $this->photoRepo->create([
                 'name' => $newFileName,
@@ -149,9 +150,11 @@ class UserController extends Controller
     }
     public function removeImage(Request $request)
     {
-        if (file_exists(public_path() . "/uploads/" . $request->input('fileName'))) {
-            unlink(public_path() . "/uploads/" . $request->input('fileName'));
-            return 'file deleted successfully';
+        $imageId=$request->input('imageId');
+        $imageName=$this->photoRepo->find($imageId);
+        if (file_exists(public_path() . "/uploads/".$imageName->user_id.'/'.$imageName->name)) {
+            unlink(public_path() . "/uploads/" .$imageName->user_id.'/'.$imageName->name);
+            $this->photoRepo->delete($imageId);
         }
         return 'file not deleted ';
     }
