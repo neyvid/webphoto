@@ -8,17 +8,22 @@
     <title>
         @yield('page-title', 'پنل مدیریت')
     </title>
+
     @vite('resources/js/app.js')
 
-    <!-- Google Font: Source Sans Pro -->
+
+
+    <link rel="stylesheet" href={{ asset('select2/css/select2.min.css') }}>
+    <link rel="stylesheet" href={{ asset('select2-bootstrap4-theme/select2-bootstrap4.min.css') }}>
 
 
     <script>
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+        < script >
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
     </script>
 
     {{-- DropZone Css  --}}

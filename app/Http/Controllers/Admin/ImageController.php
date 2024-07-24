@@ -26,4 +26,14 @@ class ImageController extends Controller
     public function changeImageStatus($id){
          ChangeStatus::changeStatus($id,$this->photoRepo);
     }
+    //Edit Image Of User
+    public function edit(Request $request){
+        $imageOfUser=$this->photoRepo->find($request->id);
+        $imageOwner=$imageOfUser->user;
+        return view('admin.photos.update',compact('imageOfUser','imageOwner'));
+    }
+    //Update Image
+    public function update(Request $request){
+
+    }
 }

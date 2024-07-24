@@ -45,6 +45,7 @@ Route::controller(ImageController::class)->prefix('panel')->group(function(){
     Route::get('image','show')->name('users.images.show');
     Route::get('image/status/change/{id}','changeImageStatus')->name('changeImageStatus');
     Route::get('image/edit','edit')->name('image.edit');
+    Route::post('image/edit','update')->name('image.update');
     Route::get('image/delete','delete')->name('image.delete');
 });
 Route::get('/panel',[AdminController::class,'index'])->name('panel');

@@ -45,7 +45,7 @@
                         <thead>
                             <tr>
                                 <th>ردیف</th>
-                                <th>کاربر</th>
+                                <th>مالک تصویر</th>
                                 <th>سایز تصویر</th>
                                 <th>وضعیت</th>
                                 <th>نوع</th>
@@ -66,40 +66,43 @@
 
                                     <td>
                                         <button type="button" class="badge bg-info border-0" data-toggle="modal"
-                                        data-target="#myModal{{ $userImage->id }}">
-                                        مشاهده جزییات
-                                    </button>
-                                    <!-- The Modal For User Detail -->
-                                    <div class="modal fade" id="myModal{{ $userImage->id }}">
-                                        <div class="modal-dialog modal-lg">
-                                            <div class="modal-content">
-                                                <!-- Modal Header -->
-                                                <div class="modal-header">
-                                                    <h4 class="modal-title">
-                                                        {{ $userImage->name }}
-                                                    </h4>
-                                                </div>
-                                                <!-- Modal body -->
-                                                <div class="modal-body orderDetailModal text-center">
+                                            data-target="#myModal{{ $userImage->id }}">
+                                            مشاهده تصویر
+                                        </button>
+                                        <!-- The Modal For User Detail -->
+                                        <div class="modal fade" id="myModal{{ $userImage->id }}">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <!-- Modal Header -->
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">
+                                                            {{ $userImage->name }}
+                                                        </h4>
+                                                    </div>
+                                                    <!-- Modal body -->
+                                                    <div class="modal-body orderDetailModal text-center">
 
-                                                    <img src={{ asset('/uploads/' . $userImage->user_id . '/' . $userImage->name) }}
-                                                        width='650' alt="">
+                                                        <img src={{ asset('/uploads/' . $userImage->user_id . '/' . $userImage->name) }}
+                                                            width='650' alt="">
+
+                                                    </div>
+                                                    <!-- Modal footer -->
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">بستن
+                                                        </button>
+                                                    </div>
 
                                                 </div>
-                                                <!-- Modal footer -->
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-dismiss="modal">بستن
-                                                    </button>
-                                                </div>
-
                                             </div>
                                         </div>
-                                    </div>
+                                        <a href="{{ route('image.edit') . '?id=' . $userImage->id }}"><span
+                                                class="badge bg-warning">ویرایش</span></a>
                                         <a href="{{ route('image.delete') . '?id=' . $userImage->id }}"><span
                                                 class="badge bg-danger">حذف</span></a>
+
                                     </td>
-                                 
+
                                 </tr>
                             @endforeach
 
