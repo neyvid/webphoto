@@ -37,9 +37,12 @@
                         </div>
                         <div class="form-group">
                             <label for="name">کاربر صاحب تصویر </label>
-                            <select  id="exampleFormControlSelect1" class="form-control js-example-basic-single" name="state">
-                                <option value="AL">Alabama</option>
-                                <option value="WY" selected>Wyoming</option>
+                            <select  id="exampleFormControlSelect1" class="form-control js-example-basic-single" name="imageOwnerId">
+                               @foreach ($allUser as $user )
+                                   
+                               <option  value={{ $user->id }} {{ $user->id == $imageOfUser->user_id ? 'selected' : '' }}>{{ $user->email }}</option>
+                               @endforeach
+                               
                             </select>
 
                         </div>

@@ -30,10 +30,11 @@ class ImageController extends Controller
     public function edit(Request $request){
         $imageOfUser=$this->photoRepo->find($request->id);
         $imageOwner=$imageOfUser->user;
-        return view('admin.photos.update',compact('imageOfUser','imageOwner'));
+        $allUser=$this->userRepo->all();
+        return view('admin.photos.update',compact('imageOfUser','imageOwner','allUser'));
     }
     //Update Image
     public function update(Request $request){
-
+            return $request->all();
     }
 }
