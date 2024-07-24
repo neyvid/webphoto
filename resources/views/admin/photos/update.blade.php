@@ -35,10 +35,14 @@
                             <input type="text" name="name" value="{{ $imageOfUser->name }}" class="form-control"
                                 id="name" placeholder="نام خود را وارد نمایید">
                         </div>
-                        <select class="js-example-basic-single" name="state">
-                            <option value="AL">Alabama</option>
-                            <option value="WY">Wyoming</option>
-                        </select>
+                        <div class="form-group">
+                            <label for="name">کاربر صاحب تصویر </label>
+                            <select  id="exampleFormControlSelect1" class="form-control js-example-basic-single" name="state">
+                                <option value="AL">Alabama</option>
+                                <option value="WY" selected>Wyoming</option>
+                            </select>
+
+                        </div>
                         {{-- <div class="row">
                         @foreach ($user->photos as $userPhoto)
                             <div class="col col-sm-2 text-center">
@@ -57,9 +61,9 @@
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary">ارسال</button>
             </div>
-     
 
-          
+
+
             </form>
         </div>
         <!-- /.card -->
@@ -68,7 +72,7 @@
 @endsection
 
 @section('Customscript')
-<script src={{ asset('select2/js/select2.full.min.js') }}></script>
+    <script src={{ asset('select2/js/select2.full.min.js') }}></script>
     <script>
         $(document).ready(function() {
             $('.js-example-basic-single').select2();
