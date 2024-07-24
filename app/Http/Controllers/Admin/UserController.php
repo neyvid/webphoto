@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 use Illuminate\Support\Facades\File as FacadesFile;
 use App\Repositories\PhotoRepository\PhotoRepository;
+use App\Services\ChangeStatus;
 use Intervention\Image\Facades\Image;
 use Intervention\Image\ImageManager;
 
@@ -87,15 +88,7 @@ class UserController extends Controller
     }
     public function changeUserStatus($id)
     {
-        $user = $this->userRepo->find($id);
-        $userStatus = $user->status;
-        if ($userStatus == 'فعال') {
-            $this->userRepo->update($id, ['status' => 'غیرفعال']);
-            return 'bg-danger';
-        } else {
-            $this->userRepo->update($id, ['status' => 'فعال']);
-            return 'bg-danger';
-        }
+          ChangeStatus::changeStatus($id,$this->userRepo);
     }
     public function userCreatForm()
     {
@@ -129,7 +122,7 @@ class UserController extends Controller
         foreach ($request->file('file') as $file) {
             $fileExtension = $file->getClientOriginalExtension();
             $fileSize = $file->getSize();
-            $newNameGenerated = Carbon::now('Asia/Tehran')->format('Y-m-d') . '_' . Str::random(40);
+            $newNameGenerated = Carbon::now('Asia/Tehran')->format('Y-m-d') . '_' . Str::random(4);
             $newFileName = $newNameGenerated . '.' . $fileExtension;
             $imageSaved=$file->move('uploads/'.$userCreated->id.'/', $newFileName);
             Image::make($imageSaved)->resize(800,800)->insert('uploads/images.png')->save($imageSaved);

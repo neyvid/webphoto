@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->integer('size');
-            $table->enum('status',[0=>'غیر فعال',1=>'فعال'])->default('فعال');
+            $table->enum('status',[0=>'غیرفعال',1=>'فعال'])->default('فعال');
             $table->string('type');
             $table->integer('user_id');
             $table->timestamps();

@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Front\HomeController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\Front\UserController as FrontUserController;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,5 +40,11 @@ Route::controller(UserController::class)->prefix('panel')->group(function(){
     // Route::post('user/image','create');
     Route::get('user/image/remove','removeImage')->name('user.remove.image');
 
+});
+Route::controller(ImageController::class)->prefix('panel')->group(function(){
+    Route::get('image','show')->name('users.images.show');
+    Route::get('image/status/change/{id}','changeImageStatus')->name('changeImageStatus');
+    Route::get('image/edit','edit')->name('image.edit');
+    Route::get('image/delete','delete')->name('image.delete');
 });
 Route::get('/panel',[AdminController::class,'index'])->name('panel');

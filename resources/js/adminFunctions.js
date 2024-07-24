@@ -1,6 +1,7 @@
-export function changeUserStatus(tag,userId) {
+//AjaxPath  is URL for Ajax Request For Exp = /'user/status/change/' for change status of user
+export function changeStatus(tag,id,ajaxPath) {
   
-    $.get('user/status/change/'+userId, function (result) {
+    $.get(ajaxPath+id, function (result) {
 
        if($(tag).hasClass('bg-danger')){
         $(tag).removeClass('bg-danger');
@@ -11,7 +12,7 @@ export function changeUserStatus(tag,userId) {
        $(tag).addClass('bg-danger');
        $(tag).html('غیر فعال');
        }
-       console.log(result);
+    //    console.log(result);
     });
 
 }
