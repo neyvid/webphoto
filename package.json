@@ -23,6 +23,7 @@
   "dependencies": {
     "asynckit": "^0.4.0",
     "combined-stream": "^1.0.8",
+    "datatables.net-dt": "^2.1.2",
     "delayed-stream": "^1.0.0",
     "dropzone": "^6.0.0-beta.2",
     "esbuild": "^0.18.20",

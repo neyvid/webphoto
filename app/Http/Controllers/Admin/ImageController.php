@@ -35,6 +35,9 @@ class ImageController extends Controller
     }
     //Update Image
     public function update(Request $request){
-            return $request->all();
+            $this->photoRepo->update($request->id,[
+                'user_id'=>$request->imageOwnerId
+            ]);
+            return redirect()->route('users.images.show')->with('success','ویرایش با موفقیت ثبت شد');
     }
 }

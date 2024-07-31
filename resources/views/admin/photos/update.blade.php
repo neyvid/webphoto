@@ -32,7 +32,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="name">نام </label>
-                            <input type="text" name="name" value="{{ $imageOfUser->name }}" class="form-control"
+                            <input dir="ltr" disabled type="text" name="name" value="{{ $imageOfUser->name }}" class="form-control"
                                 id="name" placeholder="نام خود را وارد نمایید">
                         </div>
                         <div class="form-group">

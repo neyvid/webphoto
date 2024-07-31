@@ -15,6 +15,7 @@
     </ol>
 @endsection
 
+
 @section('main-content')
     <div class="row">
         <div class="col-12">
@@ -41,7 +42,7 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body table-responsive p-0" style="height: 300px;">
-                    <table class="table table-head-fixed text-nowrap">
+                    <table id="myTable" class="table table-head-fixed text-nowrap">
                         <thead>
                             <tr>
                                 <th>ردیف</th>
@@ -118,6 +119,15 @@
         </div>
     </div>
 @endsection
+<link rel="stylesheet" href="https://cdn.datatables.net/2.1.2/css/dataTables.dataTables.css" />
+
+
 
 @section('Customscript')
+<script src="https://cdn.datatables.net/2.1.2/js/dataTables.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#myTable').DataTable();
+    });
+</script>
 @endsection
