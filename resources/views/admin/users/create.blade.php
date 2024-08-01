@@ -1,4 +1,3 @@
-
 @extends('admin.layout.master')
 @section('page-title')
     ایجاد کاربر
@@ -6,7 +5,6 @@
 @section('content-header')
     ایجاد کاربر جدید
     <a class="btn btn-success" href={{ route('users.show') }}>مشاهده کاربران</a>
-
 @endsection
 
 @section('content-breadcrumb')
@@ -155,23 +153,10 @@
 
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/min/dropzone.min.js"></script> --}}
-    <script src={{ asset('dropzone.js') }}></script>
-    
-   
+
     <script>
-        /**
-         * Form on submit
-         */
         Dropzone.autoDiscover = false;
-
-
-
         $('#formDropzone').dropzone({
-
             url: '/panel/user/create',
             method: 'POST',
             addRemoveLinks: true,
@@ -192,16 +177,10 @@
 
                 // when file is dragged in
                 this.on('addedfile', function(file) {
-                    $('.dropzone-drag-area').removeClass('is-invalid').next('.invalid-feedback').hide();
+                    $('.dropzone-drag-area').removeClass('is-invalid').next(
+                        '.invalid-feedback').hide();
 
                 });
-                // First change the button to actually tell Dropzone to process the queue.
-                // this.element.querySelector("button[type=submit]").addEventListener("click", function(e) {
-                //     // Make sure that the form isn't actually being sent.
-                //     e.preventDefault();
-                //     e.stopPropagation();
-                //     myDropzone.processQueue();
-                // });
 
                 // Listen to the sendingmultiple event. In this case, it's the sendingmultiple event instead
                 // of the sending event because uploadMultiple is set to true.
@@ -237,11 +216,8 @@
                 });
             },
             success: function(file, response) {
-                // hide form and show success message
-                $('#formDropzone').fadeOut(600);
-                setTimeout(function() {
-                    $('#successMessage').removeClass('d-none');
-                }, 600);
+                window.location.replace("{{ route('users.show') }}");
+
                 console.log(response);
             }
 
@@ -254,7 +230,8 @@
             $this.children('.spinner-border').removeClass('d-none');
 
             // validate form & submit if valid
-            if ($('#formDropzone')[0].checkValidity() === false || !myDropzone.getQueuedFiles().length > 0) {
+            if ($('#formDropzone')[0].checkValidity() === false || !myDropzone.getQueuedFiles().length >
+                0) {
                 event.stopPropagation();
 
                 // show error messages & hide button spinner    
@@ -269,8 +246,9 @@
             } else {
                 // if everything is ok, submit the form
                 myDropzone.processQueue();
-
             }
+
+
         });
     </script>
 @endsection
@@ -278,7 +256,8 @@
     div #previews {
         display: inline-table;
     }
-    textarea{
+
+    textarea {
         background-position: left calc(.375em + .1875rem) center !important
     }
 </style>

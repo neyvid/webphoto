@@ -96,6 +96,7 @@ class UserController extends Controller
     }
     public function userCreate(Request $request)
     {
+       
         
         $checkISEmailExist = $this->userRepo->findBy(['email' => $request->input('email')]);
         $checkISMobileExist = $this->userRepo->findBy(['mobile' => $request->input('mobile')]);

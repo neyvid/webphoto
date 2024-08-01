@@ -7,6 +7,7 @@ import './bootstrap';
 import {
     changeStatus
 } from './adminFunctions';
+
 window.changeStatus = changeStatus;
 
 import Dropzone from 'dropzone';
@@ -14,7 +15,7 @@ window.Dropzone = Dropzone;
 
 import Swal from 'sweetalert2';
 window.Swal = Swal;
-require('datatables.net-dt');
+
 import DataTable from 'datatables.net-dt';
-window.DataTable=DataTable;
+window.DataTable = DataTable;
 

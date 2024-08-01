@@ -6,6 +6,8 @@
 
 @section('content-header')
     تصاویر کاربران
+    <a class="btn btn-success" href={{ route('image.create.form') }}>آپلود تصویر جدید</a>
+
 @endsection
 
 @section('content-breadcrumb')

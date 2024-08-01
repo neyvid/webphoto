@@ -47,5 +47,7 @@ Route::controller(ImageController::class)->prefix('panel')->group(function(){
     Route::get('image/edit','edit')->name('image.edit');
     Route::post('image/edit','update')->name('image.update');
     Route::get('image/delete','delete')->name('image.delete');
+    Route::get('image/create','imageCreateForm')->name('image.create.form');
+    Route::post('image/create','imageCreate')->name('image.create');
 });
 Route::get('/panel',[AdminController::class,'index'])->name('panel');

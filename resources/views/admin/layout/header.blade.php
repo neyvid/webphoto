@@ -15,7 +15,10 @@
 
     <link rel="stylesheet" href={{ asset('select2/css/select2.min.css') }}>
     <link rel="stylesheet" href={{ asset('select2-bootstrap4-theme/select2-bootstrap4.min.css') }}>
-
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script src={{ asset('dropzone.js') }}></script>
 
     <script>
         < script >
