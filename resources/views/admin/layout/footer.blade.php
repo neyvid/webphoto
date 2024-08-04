@@ -58,8 +58,8 @@
 <script src={{ asset('/dist/js/demo.js') }}></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src={{ asset('/dist/js/pages/dashboard.js') }}></script>
-
-
+<script src={{ asset('dropzone.js') }}></script>
+<script src={{ asset('select2/js/select2.full.min.js') }}></script>
 @vite('resources/js/app.js')
 @yield('Customscript')
 

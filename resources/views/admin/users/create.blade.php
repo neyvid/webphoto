@@ -154,103 +154,109 @@
         </div>
     </div>
 
-    <script>
-        Dropzone.autoDiscover = false;
-        $('#formDropzone').dropzone({
-            url: '/panel/user/create',
-            method: 'POST',
-            addRemoveLinks: true,
-            autoProcessQueue: false,
-            parallelUploads: 100,
-            uploadMultiple: true,
-            acceptedFiles: '.jpeg, .jpg, .png, .gif',
-            thumbnailWidth: 900,
-            thumbnailHeight: 600,
-            previewsContainer: "#previews",
-            timeout: 0,
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            init: function() {
-
-                myDropzone = this;
-
-                // when file is dragged in
-                this.on('addedfile', function(file) {
-                    $('.dropzone-drag-area').removeClass('is-invalid').next(
-                        '.invalid-feedback').hide();
-
-                });
-
-                // Listen to the sendingmultiple event. In this case, it's the sendingmultiple event instead
-                // of the sending event because uploadMultiple is set to true.
-                this.on("addedfile", function() {
-
-                    // Gets triggered when the form is actually being sent.
-                    // Hide the success button or the complete form.
-                    console.log('addedfile');
-                });
-                this.on("sendingmultiple", function() {
+@endsection
+@section('Customscript')
 
 
-                    // Gets triggered when the form is actually being sent.
-                    // Hide the success button or the complete form.
-                });
-                this.on("successmultiple", function(files, response) {
-                    // Gets triggered when the files have successfully been sent.
-                    // Redirect user or notify of success.
-                    console.log('successmultiple');
+<script>
+    Dropzone.autoDiscover = false;
+    $('#formDropzone').dropzone({
+        url: '/panel/user/create',
+        method: 'POST',
+        addRemoveLinks: true,
+        autoProcessQueue: false,
+        parallelUploads: 100,
+        uploadMultiple: true,
+        acceptedFiles: '.jpeg, .jpg, .png, .gif',
+        thumbnailWidth: 900,
+        thumbnailHeight: 600,
+        previewsContainer: "#previews",
+        timeout: 0,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        init: function() {
 
-                });
-                this.on("successmultiple", function(files, response) {
-                    // Gets triggered when the files have successfully been sent.
-                    // Redirect user or notify of success.
-                    console.log(response);
+            myDropzone = this;
 
-                });
-                this.on("errormultiple", function(files, response) {
-                    // Gets triggered when there was an error sending the files.
-                    // Maybe show form again, and notify user of error
-                    console.log('errormultiple');
+            // when file is dragged in
+            this.on('addedfile', function(file) {
+                $('.dropzone-drag-area').removeClass('is-invalid').next(
+                    '.invalid-feedback').hide();
 
-                });
-            },
-            success: function(file, response) {
-                window.location.replace("{{ route('users.show') }}");
+            });
 
+            // Listen to the sendingmultiple event. In this case, it's the sendingmultiple event instead
+            // of the sending event because uploadMultiple is set to true.
+            this.on("addedfile", function() {
+
+                // Gets triggered when the form is actually being sent.
+                // Hide the success button or the complete form.
+                console.log('addedfile');
+            });
+            this.on("sendingmultiple", function() {
+
+
+                // Gets triggered when the form is actually being sent.
+                // Hide the success button or the complete form.
+            });
+            this.on("successmultiple", function(files, response) {
+                // Gets triggered when the files have successfully been sent.
+                // Redirect user or notify of success.
+                console.log('successmultiple');
+
+            });
+            this.on("successmultiple", function(files, response) {
+                // Gets triggered when the files have successfully been sent.
+                // Redirect user or notify of success.
                 console.log(response);
+
+            });
+            this.on("errormultiple", function(files, response) {
+                // Gets triggered when there was an error sending the files.
+                // Maybe show form again, and notify user of error
+                console.log('errormultiple');
+
+            });
+        },
+        success: function(file, response) {
+            window.location.replace("{{ route('users.show') }}");
+
+            console.log(response);
+        }
+
+    });
+    $('#formSubmit').on('click', function(event) {
+        event.preventDefault();
+        var $this = $(this);
+
+        // show submit button spinner
+        $this.children('.spinner-border').removeClass('d-none');
+
+        // validate form & submit if valid
+        if ($('#formDropzone')[0].checkValidity() === false || !myDropzone.getQueuedFiles().length >
+            0) {
+            event.stopPropagation();
+
+            // show error messages & hide button spinner    
+            $('#formDropzone').addClass('was-validated');
+            $this.children('.spinner-border').addClass('d-none');
+
+            // if dropzone is empty show error message
+            if (!myDropzone.getQueuedFiles().length > 0) {
+                console.log('ax bezar');
+                $('.dropzone-drag-area').addClass('is-invalid').next('.invalid-feedback').show();
             }
-
-        });
-        $('#formSubmit').on('click', function(event) {
-            event.preventDefault();
-            var $this = $(this);
-
-            // show submit button spinner
-            $this.children('.spinner-border').removeClass('d-none');
-
-            // validate form & submit if valid
-            if ($('#formDropzone')[0].checkValidity() === false || !myDropzone.getQueuedFiles().length >
-                0) {
-                event.stopPropagation();
-
-                // show error messages & hide button spinner    
-                $('#formDropzone').addClass('was-validated');
-                $this.children('.spinner-border').addClass('d-none');
-
-                // if dropzone is empty show error message
-                if (!myDropzone.getQueuedFiles().length > 0) {
-                    console.log('ax bezar');
-                    $('.dropzone-drag-area').addClass('is-invalid').next('.invalid-feedback').show();
-                }
-            } else {
-                // if everything is ok, submit the form
-                myDropzone.processQueue();
-            }
+        } else {
+            // if everything is ok, submit the form
+            myDropzone.processQueue();
+        }
 
 
-        });
-    </script>
+    });
+</script>
+
+
 @endsection
 <style>
     div #previews {

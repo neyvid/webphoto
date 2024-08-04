@@ -73,9 +73,9 @@
 
         </div>
     </div>
+@endsection
 
-
-
+@section('Customscript')
     <script>
         /**
          * Form on submit
@@ -140,8 +140,8 @@
                 });
             },
             success: function(file, response) {
-              
-                window.location.replace("{{route('users.images.show')}}");
+
+                window.location.replace("{{ route('users.images.show') }}");
 
                 console.log(response);
             }
@@ -171,18 +171,16 @@
                 // if everything is ok, submit the form
 
                 myDropzone.processQueue();
-                
-            }
 
+            }
         });
-    </script>
-@endsection
-@section('Customscript')
-    <script src={{ asset('select2/js/select2.full.min.js') }}></script>
-    <script>
-        $(document).ready(function() {
-            $('.js-example-basic-single').select2();
-        });
+
+
+    
+
+    $(document).ready(function() {
+    $('.js-example-basic-single').select2();
+    });
     </script>
 @endsection
 <style>
