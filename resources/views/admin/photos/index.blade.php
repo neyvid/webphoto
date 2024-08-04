@@ -29,21 +29,11 @@
                 <div class="card-header">
                     <h3 class="card-title">لیست تصاویر</h3>
 
-                    <div class="card-tools">
-                        <div class="input-group input-group-sm" style="width: 150px;">
-                            <input type="text" name="table_search" class="form-control float-right" placeholder="جستجو">
 
-                            <div class="input-group-append">
-                                <button type="submit" class="btn btn-default">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <!-- /.card-header -->
-                <div class="card-body table-responsive p-0" style="height: 300px;">
-                    <table id="myTable" class="table table-head-fixed text-nowrap">
+                <div class="card-body">
+                    <table id="myTable" class="table table-bordered table-hover">
                         <thead>
                             <tr>
                                 <th>ردیف</th>
@@ -55,6 +45,7 @@
                             </tr>
                         </thead>
                         <tbody>
+
                             @foreach ($images as $userImage)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
@@ -108,17 +99,26 @@
                                 </tr>
                             @endforeach
 
-
                         </tbody>
-
+                        <tfoot>
+                            <tr>
+                                <th>ردیف</th>
+                                <th>مالک تصویر</th>
+                                <th>سایز تصویر</th>
+                                <th>وضعیت</th>
+                                <th>نوع</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </tfoot>
                     </table>
-
                 </div>
+
                 <!-- /.card-body -->
             </div>
             <!-- /.card -->
         </div>
     </div>
+ 
 @endsection
 <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
 <link href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css" rel="stylesheet">
@@ -179,7 +179,8 @@
                     "sPrevious": "قبلی",
                     "sNext": "بعدی",
                     "sLast": "آخرین"
-                }
+                },
+                 'emptyTable': 'اطلاعاتی در دسترس نیست'
             },
             'paging': true,
             'lengthChange': true,

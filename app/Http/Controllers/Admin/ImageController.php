@@ -8,9 +8,11 @@ use App\Repositories\UserRepository\UserRepository;
 use App\Services\ChangeStatus;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 use Intervention\Image\ImageManager;
 use Illuminate\Support\Str;
+use PHPUnit\Framework\Constraint\FileExists;
 
 class ImageController extends Controller
 {
@@ -81,5 +83,18 @@ class ImageController extends Controller
         };
 
         return redirect()->route('users.images.show')->with('success', 'کاربر با موفقیت ثبت شد');
+    }
+
+    //delete photo
+    public function delete(Request $request){
+        $imageOfUser=$this->photoRepo->find($request->id);
+        if(file_exists(public_path().'/uploads/'.$imageOfUser->user_id.'/'.$imageOfUser->name)){
+            unlink(public_path() . "/uploads/".$imageOfUser->user_id.'/' . $imageOfUser->name);
+            $imageOfUser->delete();
+            return back()->with('success','تصویر با موفقیت حذف شد');
+        }else{
+            return back()->with('warning','خطایی رخ داده است!');
+        }
+
     }
 }

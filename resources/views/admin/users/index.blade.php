@@ -56,7 +56,8 @@
                                     <td>
                                         <a href="{{ route('user.edit') . '?id=' . $user->id }}"><span
                                                 class="badge bg-warning">ویرایش</span></a>
-                                        <a href="{{ route('user.delete') . '?id=' . $user->id }}"><span
+                                        <a onclick="confirmDelete(event,this)"
+                                            href="{{ route('user.delete') . '?id=' . $user->id }}"><span
                                                 class="badge bg-danger">حذف</span></a>
                                     </td>
                                 </tr>
@@ -85,6 +86,26 @@
     </div>
 
     </div>
+    <script>
+        function confirmDelete(e, tag) {
+            e.preventDefault();
+            let hrefOfTag = $(tag).attr('href');
+            Swal.fire({
+                title: "آیا از حذف این مورد اطمینان دارید؟",
+                text: "درصورت حذف،امکان بازگرداندن نیست!",
+                icon: "اخطار",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonText: "خیر",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "!بله،حذف کن"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $(location).attr('href', hrefOfTag);
+                }
+            });
+        }
+    </script>
 @endsection
 <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
 <link href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css" rel="stylesheet">
@@ -129,6 +150,7 @@
 
 
 
+
     <script>
         $('#myTable').DataTable({
             dom: 'lBfrtip',
@@ -145,7 +167,8 @@
                     "sPrevious": "قبلی",
                     "sNext": "بعدی",
                     "sLast": "آخرین"
-                }
+                },
+                'emptyTable': 'اطلاعاتی در دسترس نیست',
             },
             'paging': true,
             'lengthChange': true,
