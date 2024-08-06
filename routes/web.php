@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ImageController;
+use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Front\UserController as FrontUserController;
 
 /*
@@ -50,4 +51,7 @@ Route::controller(ImageController::class)->prefix('panel')->group(function(){
     Route::get('image/create','imageCreateForm')->name('image.create.form');
     Route::post('image/create','imageCreate')->name('image.create');
 });
+
+
+Route::resource('panel/permissions',PermissionController::class);
 Route::get('/panel',[AdminController::class,'index'])->name('panel');

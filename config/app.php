@@ -188,7 +188,7 @@ return [
          */
         
          ImageServiceProvider::class,
-
+         Spatie\Permission\PermissionServiceProvider::class,
 
 
 
