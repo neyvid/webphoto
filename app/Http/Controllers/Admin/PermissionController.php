@@ -29,7 +29,7 @@ class PermissionController extends Controller
        Permission::create([
             'name'=>$request->permissionName
        ]);
-       return redirect('panel/permissions')->with('success','مجوز مورد نیاز با موفقیت ثبت شد.');
+       return redirect()->back()->with('success','مجوز مورد نیاز با موفقیت ثبت شد.');
     }
     public function edit(Request $request,Permission $permission){
        
@@ -47,8 +47,11 @@ class PermissionController extends Controller
         return redirect()->route('permissions.index')->with('success','مجوز مورد نظر با موفقیت ویرایش شد');
     }
 
-    public function destroy(){
-
+    public function destroy(Request $request){
+        $permission=Permission::find($request->permissionId);
+        $permission->delete();
+        return redirect()->route('permissions.index')->with('success','مجوز مورد نظر با موفقیت حذف شد');
+        
     }
 
 

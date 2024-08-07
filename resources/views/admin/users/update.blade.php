@@ -46,6 +46,11 @@
                                 id="email" placeholder="ایمیل خود را وارد نمایید">
                         </div>
                         <div class="form-group">
+                            <label for="رمزعبور">رمزعبور</label>
+                            <input type="password" name="password"  class="form-control"
+                                id="password" placeholder="رمز عبور خود را وارد نمایید">
+                        </div>
+                        <div class="form-group">
                             <label for="mobile">شماره همراه</label>
                             <input type="phone" disabled name="mobile" value="{{ $user->mobile }}" class="form-control"
                                 id="mobile" placeholder="شماره همراه خود را وارد نمایید">
@@ -68,6 +73,15 @@
                                     {{ $user->sex == 'زن' ? 'checked' : '' }}>
                                 <label class="form-check-label">زن</label>
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <label>نقش کاربر</label>
+                            <select name="roles[]" multiple class="custom-select">
+
+                                @foreach ($roles as $role)
+                                    <option {{ $user->hasRole($role->name)? 'selected' : '' }} value={{ $role->name }}>{{ $role->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="address">آدرس</label>

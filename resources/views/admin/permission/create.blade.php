@@ -5,7 +5,7 @@
 
 @section('content-header')
     مجوز ها
-    <a class="btn btn-success" href={{ route('image.create.form') }}>ایجاد مجوز جدید</a>
+    <a class="btn btn-success" href={{ route('permissions.index') }}>مشاهده مجوزها </a>
 @endsection
 
 @section('content-breadcrumb')
@@ -18,10 +18,16 @@
 @section('main-content')
     <div class="row">
 
+
         <!-- left column -->
         <div class="col-md-12">
             <!-- general form elements -->
             <div class="card card-primary">
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
                 <div class="card-header">
                     <h3 class="card-title">فرم ایجاد مجوز جدید</h3>
                 </div>

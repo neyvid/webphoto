@@ -61,6 +61,14 @@
 <script src={{ asset('dropzone.js') }}></script>
 <script src={{ asset('select2/js/select2.full.min.js') }}></script>
 @vite('resources/js/app.js')
+
+<script src={{ asset('select2/js/select2.full.min.js') }}></script>
+<script>
+    $(document).ready(function() {
+        $('.js-example-basic-single').select2();
+    });
+</script>
+
 @yield('Customscript')
 
 </body>

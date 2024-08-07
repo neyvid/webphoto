@@ -36,6 +36,7 @@
                                 <th>نام و نام خانوداگی </th>
                                 <th>ایمیل</th>
                                 <th>موبایل</th>
+                                <th>نقش کاربر</th>
                                 <th>وضعیت</th>
                                 <th>عملیات</th>
                             </tr>
@@ -48,6 +49,11 @@
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->mobile }}</td>
+                                    <td>
+                                        @foreach ($user->getRoleNames() as $roleName)
+                                            <span class="status badge bg-info">{{ $roleName }}</span>
+                                        @endforeach
+                                    </td>
 
                                     <td><span style="cursor: pointer"
                                             onclick="changeStatus(this,{{ $user->id }},'user/status/change/')"
@@ -69,6 +75,7 @@
                                 <th>نام و نام خانوداگی </th>
                                 <th>ایمیل</th>
                                 <th>موبایل</th>
+                                <th>نقش کاربر</th>
                                 <th>وضعیت</th>
                                 <th>عملیات</th>
                             </tr>

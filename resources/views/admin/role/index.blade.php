@@ -1,11 +1,11 @@
 @extends('admin.layout.master')
 @section('page-title')
-    مدیریت مجوز ها
+    مدیریت نقش ها
 @endsection
 
 @section('content-header')
-    مجوز ها
-    <a class="btn btn-success" href={{ route('permissions.create') }}>ایجاد مجوز جدید</a>
+    نقش ها
+    <a class="btn btn-success" href={{ route('roles.create') }}>ایجاد نقش جدید</a>
 @endsection
 
 @section('content-breadcrumb')
@@ -26,7 +26,7 @@
                     </div>
                 @endif
                 <div class="card-header">
-                    <h3 class="card-title">لیست تصاویر</h3>
+                    <h3 class="card-title">لیست نقش ها</h3>
 
 
                 </div>
@@ -36,22 +36,24 @@
                         <thead>
                             <tr>
                                 <th>ردیف</th>
-                                <th>نوع مجوز</th>
+                                <th>نوع نقش</th>
 
                                 <th>عملیات</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($permissions as $permission)
+                            @foreach ($roles as $role)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $permission->name }}</td>
-                                    
+                                    <td>{{ $role->name }}</td>
+
                                     <td>
-                                        <a href="{{ url('panel/permissions/'.$permission->id.'/edit') }}"><span
+                                        <a href="{{ url('panel/roles/' . $role->id . '/edit') }}"><span
                                                 class="badge bg-warning">ویرایش</span></a>
-                                        <a href="{{ url('panel/permissions/'.$permission->id.'/delete') }}"><span
+                                        <a href="{{ url('panel/roles/' . $role->id . '/delete') }}"><span
                                                 class="badge bg-danger">حذف</span></a>
+                                        <a href="{{ url('panel/roles/' . $role->id . '/give-permission') }}"><span
+                                                class="badge badge-primary">اضافه | ویرایش مجوز</span></a>
 
                                     </td>
 
@@ -63,7 +65,7 @@
                         <tfoot>
                             <tr>
                                 <th>ردیف</th>
-                                <th>نوع مجوز</th>
+                                <th>نوع نقش</th>
 
                                 <th>عملیات</th>
                             </tr>

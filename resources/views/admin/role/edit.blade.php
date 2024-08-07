@@ -1,10 +1,10 @@
 @extends('admin.layout.master')
 @section('page-title')
-    ویرایش مجوز ها
+    ویرایش نقش ها
 @endsection
 
 @section('content-header')
-    ویرایش مجوز ها
+    ویرایش نقش ها
 @endsection
 
 @section('content-breadcrumb')
@@ -28,12 +28,12 @@
                     </div>
                 @endif
                 <div class="card-header">
-                    <h3 class="card-title">فرم ویرایش مجوز</h3>
+                    <h3 class="card-title">فرم ویرایش نقش</h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
 
-                <form method="POST" action={{ route('permissions.update', ['permission' => $permission]) }}>
+                <form method="POST" action={{ route('roles.update', ['role' => $role]) }}>
                     @csrf
                     @method('PUT')
 
@@ -41,11 +41,11 @@
                     <div class="card-body">
                         <div class="form-group">
 
-                            <label class="form-label text-muted opacity-75 fw-medium" for="permissionName">نام مجوز</label>
+                            <label class="form-label text-muted opacity-75 fw-medium" for="roleName">نام نقش</label>
 
-                            <input type="text" name="permissionName" class="form-control" id="permissionName"
-                                value="{{ $permission->name }}">
-                            @error('permissionName')
+                            <input type="text" name="roleName" class="form-control" id="roleName"
+                                value="{{ $role->name }}">
+                            @error('roleName')
                                 <span style="color: red">{{ $message }}</span>
                             @enderror
 

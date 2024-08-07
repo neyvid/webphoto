@@ -149,11 +149,13 @@
                                                 </li>
                                             </ul>
                                         </li>
+                                        @if(Auth::check())
                                         <li>
                                             <a class="dropdown-item dropdown-toggle " href={{ route('panel') }}>
                                                 پنل مدیریت
                                             </a>
                                         </li>
+                                        @endif
                                         <li class="dropdown dropdown-mega">
                                             <a class="dropdown-item dropdown-toggle" href="elements.html">
                                                 Elements

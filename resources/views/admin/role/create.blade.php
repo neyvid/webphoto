@@ -1,10 +1,11 @@
 @extends('admin.layout.master')
 @section('page-title')
-    ویرایش مجوز ها
+    مدیریت نقش ها
 @endsection
 
 @section('content-header')
-    ویرایش مجوز ها
+    نقش ها
+    <a class="btn btn-success" href={{ route('roles.index') }}>مشاهده نقشها </a>
 @endsection
 
 @section('content-breadcrumb')
@@ -28,27 +29,23 @@
                     </div>
                 @endif
                 <div class="card-header">
-                    <h3 class="card-title">فرم ویرایش مجوز</h3>
+                    <h3 class="card-title">فرم ایجاد نقش جدید</h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
 
-                <form method="POST" action={{ route('permissions.update', ['permission' => $permission]) }}>
+                <form method="post" action={{ route('roles.store') }}>
                     @csrf
-                    @method('PUT')
-
-
                     <div class="card-body">
                         <div class="form-group">
 
-                            <label class="form-label text-muted opacity-75 fw-medium" for="permissionName">نام مجوز</label>
+                            <label class="form-label text-muted opacity-75 fw-medium" for="roleName">نام نقش</label>
 
-                            <input type="text" name="permissionName" class="form-control" id="permissionName"
-                                value="{{ $permission->name }}">
-                            @error('permissionName')
+                            <input type="text" name="roleName" class="form-control" id="roleName"
+                                placeholder="نام نقش مورد نظر را وارد نمایید">
+                            @error('roleName')
                                 <span style="color: red">{{ $message }}</span>
                             @enderror
-
                             <div class="invalid-feedback fw-bold">نام خود را وارد نمایید</div>
                         </div>
 

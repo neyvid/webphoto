@@ -25,7 +25,7 @@ class authRequest extends FormRequest
     {
         return [
             'username' => array('required','regex:/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)|09(0[1-5]|1[0-9]|2[0-2]|3[0-9]|9[4|8|9])-?[0-9]{3}-?[0-9]{4}$/'),
-            'password'=>'required|regex:/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/'
+            'password'=>'required'
         ];
     }
     public function messages()
@@ -34,7 +34,6 @@ class authRequest extends FormRequest
             'username.required' => 'شماره همراه و یا ایمیل خود را وارد نمایید',
             'username.regex' => 'شماره همراه و یا ایمیل معتبر نمی باشد',
             'password.required' => 'کلمه عبورخودراواردنمایید',
-            'password.regex' => 'رمز عبور حداقل باید ۸ کاراکتر باشد وترکیبی ازحروف کوچک وبزرگ واعداد باشد',
         ];
     }
 }

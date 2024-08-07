@@ -75,10 +75,5 @@
 @endsection
 
 @section('Customscript')
-    <script src={{ asset('select2/js/select2.full.min.js') }}></script>
-    <script>
-        $(document).ready(function() {
-            $('.js-example-basic-single').select2();
-        });
-    </script>
+ 
 @endsection

@@ -1,10 +1,10 @@
 @extends('admin.layout.master')
 @section('page-title')
-    ویرایش مجوز ها
+    اضافه کردن مجوز های مورد نیاز
 @endsection
 
 @section('content-header')
-    ویرایش مجوز ها
+    اضافه کردن مجوز های مورد نیاز
 @endsection
 
 @section('content-breadcrumb')
@@ -28,28 +28,36 @@
                     </div>
                 @endif
                 <div class="card-header">
-                    <h3 class="card-title">فرم ویرایش مجوز</h3>
+                    <h3 class="card-title">فرم اضافه کردن مجوز به نقش : 
+                        <span class="font-weight-bolder "><u>{{$role->name}}</u></span>
+                   
+                    </h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
 
-                <form method="POST" action={{ route('permissions.update', ['permission' => $permission]) }}>
+                <form method="POST" action={{ url('panel/roles/' . $role->id . '/give-permission') }}>
                     @csrf
                     @method('PUT')
 
 
                     <div class="card-body">
+                        <p> مجوز ها:</p>
                         <div class="form-group">
+                            @foreach ($permissions as $permission)
+                                <div class="custom-control custom-checkbox d-inline">
 
-                            <label class="form-label text-muted opacity-75 fw-medium" for="permissionName">نام مجوز</label>
+                                    <input class="custom-control-input" type="checkbox"
+                                        id="customCheckbox{{ $permission->id }}" value="{{ $permission->name }}"
+                                        name="permission[]" {{ $role->hasPermissionTo($permission->name)? 'checked' : '' }}>
+                                    <label for="customCheckbox{{ $permission->id }}"
+                                        class="custom-control-label">{{ $permission->name }}</label>
 
-                            <input type="text" name="permissionName" class="form-control" id="permissionName"
-                                value="{{ $permission->name }}">
-                            @error('permissionName')
-                                <span style="color: red">{{ $message }}</span>
-                            @enderror
 
-                            <div class="invalid-feedback fw-bold">نام خود را وارد نمایید</div>
+                                    </div>
+                                     @endforeach
+
+                               
                         </div>
 
 

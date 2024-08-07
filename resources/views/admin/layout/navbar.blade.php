@@ -12,7 +12,7 @@
       <a href="#" class="nav-link">تماس با ما</a>
     </li>
   </ul>
-
+  <a href={{route('user.logout')}}  type="button" class="btn btn-danger">خروج</a>
   <!-- Right navbar links -->
   <ul class="navbar-nav ml-auto">
     <!-- Navbar Search -->
