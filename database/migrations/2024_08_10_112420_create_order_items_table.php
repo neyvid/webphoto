@@ -13,16 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('order_items_table', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->integer('user_id');
+            $table->integer('order_id');
+            $table->integer('photo_id');
+            $table->integer('discount');
+            $table->string('photoSize');
+            $table->integer('quantity');
             $table->integer('price');
-            $table->integer('discount_amount')->default(0);
+            $table->string('typeOfPhoto'); //for exp In album or in cup or ....
             $table->integer('payable_amount');
-            $table->integer('status');
-            $table->integer('tax');
-            $table->integer('refId')->nullable();
         });
     }
 
@@ -33,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('order_items_tabale');
     }
 };

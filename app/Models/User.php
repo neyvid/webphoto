@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Models\Order;
 use App\Models\Photo;
 use Laravel\Sanctum\HasApiTokens;
 use Database\Factories\UserFactory;
@@ -29,5 +30,8 @@ class User extends Authenticatable
     public function Photos() :HasMany
     {
         return $this->hasMany(Photo::class);
+    }
+    public function Orders(){
+        $this->hasMany(Order::class);
     }
 }

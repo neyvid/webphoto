@@ -60,11 +60,11 @@ class ImageController extends Controller
     public function imageCreate(Request $request)
     {
       
-        $imageData = [
-            'user_id' => $request->input('imageOwnerId'),
-        ];
+        // $imageData = [
+        //     'user_id' => $request->input('imageOwnerId'),
+        // ];
 
-        $imageCreate = $this->photoRepo->create($imageData);
+        // $imageCreate = $this->photoRepo->create($imageData);
         
         foreach ($request->file('file') as $file) {
             $fileExtension = $file->getClientOriginalExtension();
@@ -74,10 +74,11 @@ class ImageController extends Controller
             $imageSaved = $file->move('uploads/' . $request->input('imageOwnerId') . '/', $newFileName);
             Image::make($imageSaved)->resize(800, 800)->insert('uploads/images.png')->save($imageSaved);
 
-            $imageCreate->update([
+            $this->photoRepo->create([
                 'name' => $newFileName,
                 'size' => $fileSize,
                 'type' => $fileExtension,
+                'user_id' => $request->input('imageOwnerId'),
                 'status' => 'فعال',
             ]);
         };

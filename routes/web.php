@@ -68,7 +68,7 @@ Route::group(['middleware' => ['auth', 'role:super-admin']], function () {
 //Route OF User
 Route::group(['middleware' => ['auth', 'role:user']], function () {
     Route::get('/user', [AdminController::class, 'userIndex'])->name('userPanel');
-    Route::controller(FrontUserController::class)->prefix('panel/user')->group(function () {
+    Route::controller(UserController::class)->prefix('panel/user')->group(function () {
         Route::get('images', 'showUserImages')->name('user.images.show');
     });
 });

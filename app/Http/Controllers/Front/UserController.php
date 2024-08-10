@@ -60,12 +60,10 @@ class UserController extends Controller
                 'password'=>Hash::make($request->password),
            ]);
            Auth::login($user,true);
-           return redirect()->route('user.edit');
+           return redirect()->route('panel');
         };
         return 'این ایمیل و یا شماره همراه قبلا در سیستم ثبت نام کرده است.';
     }   
-    public function showUserImages(){
-        return 'show users image';
-    }
+
     
 }

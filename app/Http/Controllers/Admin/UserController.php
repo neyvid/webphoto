@@ -180,4 +180,9 @@ class UserController extends Controller
         Auth::logout();
         return redirect()->route('home');
     }
+
+    public function showUserImages(){
+        return Auth::user()->Photos;
+    }
 }
+

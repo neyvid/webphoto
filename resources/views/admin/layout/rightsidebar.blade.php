@@ -6,6 +6,7 @@
             style="opacity: .8">
         <span class="brand-text font-weight-light">
             {{ Auth::user()->roles[0]['name'] == 'super-admin' ? 'پنل مدیریت' : 'پنل' }}
+         
         </span>
     </a>
 
