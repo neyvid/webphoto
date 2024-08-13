@@ -182,7 +182,8 @@ class UserController extends Controller
     }
 
     public function showUserImages(){
-        return Auth::user()->Photos;
+        $userPhotos= Auth::user()->Photos;
+        return view('admin.photos.user.index',compact('userPhotos'));
+       
     }
 }
-

@@ -28,9 +28,9 @@
                     </div>
                 @endif
                 <div class="card-header">
-                    <h3 class="card-title">فرم اضافه کردن مجوز به نقش : 
-                        <span class="font-weight-bolder "><u>{{$role->name}}</u></span>
-                   
+                    <h3 class="card-title">فرم اضافه کردن مجوز به نقش :
+                        <span class="font-weight-bolder "><u>{{ $role->name }}</u></span>
+
                     </h3>
                 </div>
                 <!-- /.card-header -->
@@ -49,15 +49,15 @@
 
                                     <input class="custom-control-input" type="checkbox"
                                         id="customCheckbox{{ $permission->id }}" value="{{ $permission->name }}"
-                                        name="permission[]" {{ $role->hasPermissionTo($permission->name)? 'checked' : '' }}>
+                                        name="permission[]" {{ $role->hasPermissionTo($permission->name) ? 'checked' : '' }}>
                                     <label for="customCheckbox{{ $permission->id }}"
                                         class="custom-control-label">{{ $permission->name }}</label>
 
 
-                                    </div>
-                                     @endforeach
+                                </div>
+                            @endforeach
 
-                               
+
                         </div>
 
 
