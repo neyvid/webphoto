@@ -6,6 +6,7 @@ use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\PriceOfPrintController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Front\UserController as FrontUserController;
 use Doctrine\DBAL\Driver\Middleware;
@@ -54,6 +55,11 @@ Route::group(['middleware' => ['auth', 'role:super-admin']], function () {
         Route::get('image/delete', 'delete')->name('image.delete');
         Route::get('image/create', 'imageCreateForm')->name('image.create.form');
         Route::post('image/create', 'imageCreate')->name('image.create');
+    });
+    Route::controller(PriceOfPrintController::class)->prefix('panel')->group(function (){
+        Route::get('price_of_print','index')->name('priceOfPrint.index');
+        Route::get('price_of_print/create','createForm')->name('priceOfPrint.create.form');
+        Route::post('price_of_print/create','create')->name('priceOfPrint.create');
     });
 
 

@@ -13,17 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('order_items', function (Blueprint $table) {
+        Schema::create('price_of_print', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->integer('order_id');
-            $table->integer('photo_id');
-            $table->integer('discount');
-            $table->string('photoSize');
-            $table->integer('quantity');
+            $table->string('size');
             $table->integer('price');
-            $table->string('typeOfPhoto'); //for exp In album or in cup or ....
-            $table->integer('payable_amount');
+            $table->string('printGenus')->default('paper');
+            $table->string('printType');
+            $table->integer('shasiTickness')->default(null);
         });
     }
 
@@ -34,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order_items_tabale');
+        Schema::dropIfExists('price_of_print');
     }
 };
