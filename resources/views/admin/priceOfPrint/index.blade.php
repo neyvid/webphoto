@@ -49,7 +49,6 @@
                             @foreach ($priceOfPrints as $priceOfPrint)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $priceOfPrint->user->email }}</td>
                                     <td>{{ $priceOfPrint->size }}</td>
                                     <td>{{ $priceOfPrint->printType }}</td>
                                     <td>{{ $priceOfPrint->printGenus }}</td>

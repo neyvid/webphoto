@@ -26,7 +26,7 @@
                 <!-- /.card-header -->
                 <!-- form start -->
 
-                <form  method="POST" enctype="multipart/form-data">
+                <form method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
 
@@ -40,13 +40,13 @@
 
                             </select>
 
-                            
+
                         </div>
                         <div class="form-group">
                             <label for="printType">نوع چاپ تصویر</label>
                             <select id="exampleFormControlSelect1" class="form-control js-example-basic-single"
                                 name="printType">
-                                @foreach (Config('photoconfig.printtype') as $key=>$photoType)
+                                @foreach (Config('photoconfig.printtype') as $key => $photoType)
                                     <option value={{ $key }}>{{ $photoType }}</option>
                                 @endforeach
 
@@ -55,20 +55,22 @@
                         </div>
                         <div class="form-group">
                             <label for="printGenus">جنس چاپ تصویر</label>
-                            <select id="exampleFormControlSelect1" class="form-control js-example-basic-single"
+                            <select onchange="changeGenus(this)" id="printGenus" class="form-control js-example-basic-single"
                                 name="printGenus">
-                                @foreach (Config('photoconfig.printGenus') as $key=>$printGenus)
+                                @foreach (Config('photoconfig.printGenus') as $key => $printGenus)
                                     <option value={{ $key }}>{{ $printGenus }}</option>
                                 @endforeach
 
                             </select>
 
                         </div>
-                        <div class="form-group">
-                            <label for="shasiTickness">ضخامت شاسی (در صورتیکه قصد چاپ روی شاسی را دارید وارد نمایید.)</label>
-                            <select id="exampleFormControlSelect1" class="form-control js-example-basic-single"
-                                name="shasiTickness">
-                                @foreach (Config('photoconfig.shasiTickness') as $key=>$shasiTickness)
+                   
+                        <div class="form-group thicknessOfShasi" style="display: none">
+                            <label for="thicknessOfShasi">ضخامت شاسی (در صورتیکه قصد چاپ روی شاسی را دارید وارد
+                                نمایید.)</label>
+                            <select id="thicknessOfShasi" class="form-control js-example-basic-single"
+                                name="thicknessOfShasi">
+                                @foreach (Config('photoconfig.shasiTickness') as $key => $shasiTickness)
                                     <option value={{ $key }}>{{ $shasiTickness }}</option>
                                 @endforeach
 
@@ -85,7 +87,7 @@
                             <div class="invalid-feedback fw-bold">قیمت مد نظر را وارد نمایید</div>
 
                         </div>
-                        
+
 
                     </div>
                     <!-- /.card-body -->
@@ -108,6 +110,18 @@
         $(document).ready(function() {
             $('.js-example-basic-single').select2();
         });
+    </script>
+    <script>
+        function changeGenus(tag) {
+            if(tag.value=='shasi'){
+                $('.thicknessOfShasi').show();
+            }else{
+                $('.thicknessOfShasi').hide();
+            }
+        }
+
+
+    
     </script>
 @endsection
 <style>

@@ -60,6 +60,7 @@ Route::group(['middleware' => ['auth', 'role:super-admin']], function () {
         Route::get('price_of_print','index')->name('priceOfPrint.index');
         Route::get('price_of_print/create','createForm')->name('priceOfPrint.create.form');
         Route::post('price_of_print/create','create')->name('priceOfPrint.create');
+        
     });
 
 
@@ -71,6 +72,7 @@ Route::group(['middleware' => ['auth', 'role:super-admin']], function () {
     Route::put('panel/roles/{roleId}/give-permission', [RoleController::class, 'givePermissionToRole']);
 });
 
+Route::post('panel/calculatePriceOfPrint',[PriceOfPrintController::class,'calculatePriceOfPrint'])->name('calculatePrice');
 //Route OF User
 Route::group(['middleware' => ['auth', 'role:user']], function () {
     Route::get('/user', [AdminController::class, 'userIndex'])->name('userPanel');

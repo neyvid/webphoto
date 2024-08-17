@@ -108,7 +108,8 @@
                                                                 <label for="photoSize">سایز تصویر</label>
                                                                 <select id="photoSize"
                                                                     class="form-control js-example-basic-single"
-                                                                    name="photoSize">
+                                                                    name="photoSize" onchange="calculatePriceOfPrint(this)">
+
                                                                     @foreach (Config('photoconfig.photosize') as $photoSize)
                                                                         <option value={{ $photoSize }}>
                                                                             {{ $photoSize }}</option>
@@ -123,8 +124,21 @@
                                                                     class="form-control js-example-basic-single printOnShasi"
                                                                     name="printType">
                                                                     @foreach (Config('photoconfig.printtype') as $key => $printtype)
-                                                                        <option  value={{ $key }}>
+                                                                        <option value={{ $key }}>
                                                                             {{ $printtype }}</option>
+                                                                    @endforeach
+
+                                                                </select>
+
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="printGenus">جنس چاپ</label>
+                                                                <select id="printGenus"
+                                                                    class="form-control js-example-basic-single"
+                                                                    name="printGenus">
+                                                                    @foreach (Config('photoconfig.printGenus') as $key => $printGenus)
+                                                                        <option value={{ $key }}>
+                                                                            {{ $printGenus }}</option>
                                                                     @endforeach
 
                                                                 </select>
@@ -146,9 +160,9 @@
                                                                 <select id="thickness"
                                                                     class="form-control js-example-basic-single"
                                                                     name="thickness">
-                                                                    @foreach (Config('photoconfig.printtype') as $key => $printtype)
+                                                                    @foreach (Config('photoconfig.shasiTickness') as $key => $shasiTickness)
                                                                         <option value={{ $key }}>
-                                                                            {{ $printtype }}</option>
+                                                                            {{ $shasiTickness }}</option>
                                                                     @endforeach
 
                                                                 </select>
@@ -164,9 +178,11 @@
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="message-text"
-                                                                    class="col-form-label">Message:</label>
-                                                                <textarea class="form-control" id="message-text"></textarea>
+                                                                <label for="message-text">
+                                                                    <span>قیمت:
+                                                                        <p class='price'></p>
+                                                                    </span>
+
                                                             </div>
                                                         </form>
                                                     </div>
@@ -255,6 +271,41 @@
 
             }
         });
+
+
+
+        function calculatePriceOfPrint(tag) {
+            let photoSize = $('#photoSize').val();
+            let printType = $('#printType').val();
+            let thickness=0;
+            let printGenus = $('#printGenus').val();
+            let quantity = $('#quantity').val();
+            if($('#thickness').val()!=0){
+                let thickness = $('#thickness').val();
+            }
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '/panel/calculatePriceOfPrint',
+                type: "POST",
+                data: {
+                    'photoSize': photoSize,
+                    'printType': printType,
+                    'thickness': thickness,
+                    'quantity': quantity,
+                    'printGenus': printGenus,
+                    
+                   
+                },
+                success: function(result) {
+                   $('.price').html(result);
+                },
+                error: function(e) {
+                    $('.price').html('0 تومان');
+                }
+            });
+        }
     </script>
 
 
