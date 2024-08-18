@@ -34,19 +34,22 @@ class PriceOfPrintController extends Controller
     }
 
     public function calculatePriceOfPrint(Request $request){
-        
+     
        $result=$this->priceOFPrintRepo->findBy([
         'size'=>$request->photoSize,
         'printType'=>$request->printType,
         'printGenus'=>$request->printGenus,
-        'shasiTickness'=>$request->thickness,
+        'shasiTickness'=>($request->printGenus =='shasi')? $request->thickness : 0,
        ]);
+
        if($result instanceof PriceOfPrint){
         $priceOfPrint=$result->price;
-        $totalPrice=($request->quantity*$priceOfPrint);
-        return $totalPrice;
+        $tax=($priceOfPrint*(.1)*$request->quantity);
+        $totalPrice=($request->quantity*$priceOfPrint)+$tax;
+        return response()->json(['price'=>$priceOfPrint,'tax'=>$tax,'totalPrice'=>$totalPrice]);
        }
-       return 'تعرفه ای یافت نشد';
+       return response()->json(['price'=>'تعرفه ای ثبت نشده','tax'=>'تعرفه ای ثبت نشده','totalPrice'=>'تعرفه ای ثبت نشده']);
 
     }
+  
 }

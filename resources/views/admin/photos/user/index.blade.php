@@ -87,11 +87,12 @@
 
 
                                         <button type="button" class="badge bg-success border-0" data-toggle="modal"
-                                            data-target="#buy_photo">سفارش خرید</button>
+                                            data-target="#buy_photo{{ $userPhoto->id }}">سفارش خرید</button>
 
 
-                                        <div class="modal fade" id="buy_photo" tabindex="-1" role="dialog"
-                                            aria-labelledby="buy_photo" aria-hidden="true">
+                                        <div class="modal fade" id="buy_photo{{ $userPhoto->id }}" tabindex="-1"
+                                            role="dialog" aria-labelledby="buy_photo{{ $userPhoto->id }}"
+                                            aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -102,13 +103,15 @@
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <form>
+                                                        <form id='orderForm{{ $userPhoto->id }}' method="POST"
+                                                            action={{ route('image.addtocart',['photoId'=>$userPhoto->id]) }}>
 
                                                             <div class="form-group">
                                                                 <label for="photoSize">سایز تصویر</label>
                                                                 <select id="photoSize"
                                                                     class="form-control js-example-basic-single"
-                                                                    name="photoSize" onchange="calculatePriceOfPrint(this)">
+                                                                    name="photoSize" onchange="calculatePriceOfPrint()">
+                                                                    <option>سایز تصویر را انتخاب نمایید</option>
 
                                                                     @foreach (Config('photoconfig.photosize') as $photoSize)
                                                                         <option value={{ $photoSize }}>
@@ -121,8 +124,9 @@
                                                             <div class="form-group">
                                                                 <label for="printType">نوع چاپ</label>
                                                                 <select id="printType"
-                                                                    class="form-control js-example-basic-single printOnShasi"
-                                                                    name="printType">
+                                                                    class="form-control js-example-basic-single "
+                                                                    name="printType" onchange="calculatePriceOfPrint()">
+                                                                    <option>نوع چاپ را انتخاب نمایید</option>
                                                                     @foreach (Config('photoconfig.printtype') as $key => $printtype)
                                                                         <option value={{ $key }}>
                                                                             {{ $printtype }}</option>
@@ -135,7 +139,8 @@
                                                                 <label for="printGenus">جنس چاپ</label>
                                                                 <select id="printGenus"
                                                                     class="form-control js-example-basic-single"
-                                                                    name="printGenus">
+                                                                    name="printGenus" onchange="calculatePriceOfPrint()">
+                                                                    <option>جنس چاپ را انتخاب نمایید</option>
                                                                     @foreach (Config('photoconfig.printGenus') as $key => $printGenus)
                                                                         <option value={{ $key }}>
                                                                             {{ $printGenus }}</option>
@@ -144,22 +149,13 @@
                                                                 </select>
 
                                                             </div>
-                                                            <div class="form-group">
-                                                                <div class="custom-control custom-checkbox d-inline">
-                                                                    <input class="custom-control-input " type="checkbox"
-                                                                        id="printOnShasi" name="printOnShasi">
-                                                                    <label for="printOnShasi"
-                                                                        class="custom-control-label ">میخای
-                                                                        عکستو برات رو
-                                                                        شاسی چاپ کنیم؟</label>
-                                                                </div>
-                                                            </div>
+
 
                                                             <div class="form-group thicknessOfShasi" style="display: none">
                                                                 <label for="thickness">ضخامت شاسی</label>
                                                                 <select id="thickness"
                                                                     class="form-control js-example-basic-single"
-                                                                    name="thickness">
+                                                                    name="thickness" onchange="calculatePriceOfPrint()">
                                                                     @foreach (Config('photoconfig.shasiTickness') as $key => $shasiTickness)
                                                                         <option value={{ $key }}>
                                                                             {{ $shasiTickness }}</option>
@@ -173,24 +169,53 @@
                                                                     class="col-form-label">تعداد</label>
 
                                                                 <input min="1" max="10" value="1"
-                                                                    type="number" id="quantity" class="form-control" />
+                                                                    type="number" name="quantity" onchange="calculatePriceOfPrint()"
+                                                                    id="quantity" class="form-control" />
 
                                                             </div>
+                                                            <div class="col-12">
 
-                                                            <div class="form-group">
-                                                                <label for="message-text">
-                                                                    <span>قیمت:
-                                                                        <p class='price'></p>
-                                                                    </span>
+                                                                <div class="table-responsive">
+                                                                    <table class="table">
+                                                                        <tr>
+                                                                            <th style="width:50%">
+                                                                                قیمت هر عدد <span
+                                                                                    style='font-size:13px'>(تومان)</span>:
 
+                                                                            </th>
+                                                                            <td class='price'>-</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th>
+                                                                                مالیات(10%) <span
+                                                                                    style='font-size:13px'>(تومان)</span>:
+                                                                            </th>
+                                                                            <td class='tax'>-</td>
+                                                                        </tr>
+
+                                                                        <tr>
+                                                                            <th>
+                                                                                جمع کل<span
+                                                                                    style='font-size:13px'>(تومان)</span>:
+                                                                            </th>
+                                                                            <td class='totalPrice'>-</td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-danger"
+                                                                    data-dismiss="modal">انصراف</button>
+                                                                <button onclick="addToCart({{ $userPhoto->id }})"
+                                                                    type="submit" class="btn btn-success">
+                                                                    <i class="fas fa-cart-plus fa-lg mr-2"></i>
+                                                                    به سبد خرید اضافه شود
+
+                                                                </button>
                                                             </div>
                                                         </form>
                                                     </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-dismiss="modal">Close</button>
-                                                        <button type="button" class="btn btn-primary">Send message</button>
-                                                    </div>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -257,32 +282,62 @@
 
 
     <script type="text/javascript">
-        $('.printOnShasi').change(function(e) {
-            alert('change');
+        $('#printGenus').change(function(e) {
+            let tag = document.getElementById("printGenus")
 
-        });
-        $('#printOnShasi').click(function(e) {
-            let tag = document.getElementById("printOnShasi")
-
-            if (tag.checked) {
+            if (tag.value == 'shasi') {
                 $('.thicknessOfShasi').show();
             } else {
                 $('.thicknessOfShasi').hide();
 
             }
+
         });
 
 
+        function addToCart(userPhotoId) {
 
-        function calculatePriceOfPrint(tag) {
+            var frm = $('#orderForm' + userPhotoId);
+
+            frm.submit(function(e) {
+
+                e.preventDefault();
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    type: frm.attr('method'),
+                    url: frm.attr('action'),
+                    data: frm.serialize(),
+                    success: function(data) {
+                        console.log('Submission was successful.');
+                        console.log(data);
+                    },
+                    error: function(data) {
+                        console.log('An error occurred.');
+                        console.log(data);
+                    },
+                });
+            });
+
+
+
+
+        }
+
+
+        function calculatePriceOfPrint() {
             let photoSize = $('#photoSize').val();
             let printType = $('#printType').val();
-            let thickness=0;
+            let thickness = null;
             let printGenus = $('#printGenus').val();
             let quantity = $('#quantity').val();
-            if($('#thickness').val()!=0){
-                let thickness = $('#thickness').val();
+            if (thickness != 0) {
+                thickness = $('#thickness').val();
+            } else {
+                thickness = 0;
             }
+
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -295,14 +350,17 @@
                     'thickness': thickness,
                     'quantity': quantity,
                     'printGenus': printGenus,
-                    
-                   
+
+
                 },
                 success: function(result) {
-                   $('.price').html(result);
+                    $('.price').html(result.price);
+                    $('.tax').html(result.tax);
+                    $('.totalPrice').html(result.totalPrice);
                 },
                 error: function(e) {
                     $('.price').html('0 تومان');
+
                 }
             });
         }

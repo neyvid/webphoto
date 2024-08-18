@@ -7,6 +7,7 @@ use App\Repositories\PhotoRepository\PhotoRepository;
 use App\Repositories\UserRepository\UserRepository;
 use App\Services\ChangeStatus;
 use Carbon\Carbon;
+use Hamcrest\Arrays\IsArray;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
@@ -85,7 +86,6 @@ class ImageController extends Controller
 
         return redirect()->route('users.images.show')->with('success', 'کاربر با موفقیت ثبت شد');
     }
-
     //delete photo
     public function delete(Request $request){
         $imageOfUser=$this->photoRepo->find($request->id);
@@ -97,5 +97,16 @@ class ImageController extends Controller
             return back()->with('warning','خطایی رخ داده است!');
         }
 
+    }
+    
+    public function addtocart(Request $request){
+        $cart=session('cart',[]);
+        $cart[$request->photoId] = $request->all();
+        if(array_key_exists($request->photoId,$cart)){
+            $cart[$request->photoId]['quantity']+=$request->quantity;
+        }else{
+           $cart=session('cart')[$request->photoId]->put($request->all());
+        }
+        return $cart;
     }
 }

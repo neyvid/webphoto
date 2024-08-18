@@ -71,6 +71,7 @@ Route::group(['middleware' => ['auth', 'role:super-admin']], function () {
     Route::get('panel/roles/{roleId}/give-permission', [RoleController::class, 'addPermissionToRole']);
     Route::put('panel/roles/{roleId}/give-permission', [RoleController::class, 'givePermissionToRole']);
 });
+Route::post('image/add_to_cart',[ImageController::class,'addtocart'])->name('image.addtocart');
 
 Route::post('panel/calculatePriceOfPrint',[PriceOfPrintController::class,'calculatePriceOfPrint'])->name('calculatePrice');
 //Route OF User
