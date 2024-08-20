@@ -103,8 +103,8 @@
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <form id='orderForm{{ $userPhoto->id }}' method="POST"
-                                                            action={{ route('image.addtocart',['photoId'=>$userPhoto->id]) }}>
+                                                        <form id='orderForm{{ $userPhoto->id }}'
+                                                            action={{ route('image.addtocart', ['photoId' => $userPhoto->id]) }}>
 
                                                             <div class="form-group">
                                                                 <label for="photoSize">سایز تصویر</label>
@@ -169,8 +169,9 @@
                                                                     class="col-form-label">تعداد</label>
 
                                                                 <input min="1" max="10" value="1"
-                                                                    type="number" name="quantity" onchange="calculatePriceOfPrint()"
-                                                                    id="quantity" class="form-control" />
+                                                                    type="number" name="quantity"
+                                                                    onchange="calculatePriceOfPrint()" id="quantity"
+                                                                    class="form-control" />
 
                                                             </div>
                                                             <div class="col-12">
@@ -206,14 +207,16 @@
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-danger"
                                                                     data-dismiss="modal">انصراف</button>
-                                                                <button onclick="addToCart({{ $userPhoto->id }})"
-                                                                    type="submit" class="btn btn-success">
+                                                                <button type="button"
+                                                                    data-photoId="{{ $userPhoto->id }}"
+                                                                    class="btn btnsubmit btn-success">
                                                                     <i class="fas fa-cart-plus fa-lg mr-2"></i>
                                                                     به سبد خرید اضافه شود
 
                                                                 </button>
                                                             </div>
                                                         </form>
+
                                                     </div>
 
                                                 </div>
@@ -295,36 +298,59 @@
         });
 
 
-        function addToCart(userPhotoId) {
 
-            var frm = $('#orderForm' + userPhotoId);
+        $('.btnsubmit').on('click', function() {
+            var photoId = $(this).attr("data-photoId");
+            var frm = $('#orderForm' + photoId);
 
-            frm.submit(function(e) {
 
-                e.preventDefault();
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    type: frm.attr('method'),
-                    url: frm.attr('action'),
-                    data: frm.serialize(),
-                    success: function(data) {
-                        console.log('Submission was successful.');
-                        console.log(data);
-                    },
-                    error: function(data) {
-                        console.log('An error occurred.');
-                        console.log(data);
-                    },
-                });
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: 'POST',
+                url: frm.attr('action'),
+                data: frm.serialize(),
+                success: function(data) {
+                    console.log('Submission was successful.');
+                    console.log(data);
+                },
+                error: function(data) {
+                    console.log('An error occurred.');
+                    console.log(data);
+                },
             });
 
+        })
 
 
 
-        }
 
+        // function addToCart(userPhotoId, e, tag) {
+
+        //     var frm = $('#orderForm' + userPhotoId);
+
+        //     $('#orderForm' + userPhotoId).submit(function(e) {
+        //         e.preventDefault();
+        //         $.ajax({
+        //             headers: {
+        //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //             },
+        //             type: 'POST',
+        //             url: frm.attr('action'),
+        //             data: frm.serialize(),
+        //             success: function(data) {
+        //                 console.log('Submission was successful.');
+        //                 console.log(data);
+        //             },
+        //             error: function(data) {
+        //                 console.log('An error occurred.');
+        //                 console.log(data);
+        //             },
+        //         });
+        //     });
+
+        // }
 
         function calculatePriceOfPrint() {
             let photoSize = $('#photoSize').val();

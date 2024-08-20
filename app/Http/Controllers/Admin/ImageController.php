@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Repositories\PhotoRepository\PhotoRepository;
-use App\Repositories\UserRepository\UserRepository;
-use App\Services\ChangeStatus;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Hamcrest\Arrays\IsArray;
 use Illuminate\Http\Request;
+use App\Services\ChangeStatus;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
-use Intervention\Image\Facades\Image;
 use Intervention\Image\ImageManager;
-use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Session;
 use PHPUnit\Framework\Constraint\FileExists;
+use App\Repositories\UserRepository\UserRepository;
+use App\Repositories\PhotoRepository\PhotoRepository;
 
 class ImageController extends Controller
 {
@@ -100,13 +101,53 @@ class ImageController extends Controller
     }
     
     public function addtocart(Request $request){
-        $cart=session('cart',[]);
-        $cart[$request->photoId] = $request->all();
-        if(array_key_exists($request->photoId,$cart)){
-            $cart[$request->photoId]['quantity']+=$request->quantity;
-        }else{
-           $cart=session('cart')[$request->photoId]->put($request->all());
+      
+        $cart = session()->get('cart');
+        $specialKey=$request->printGenus.$request->photoSize.$request->printType.$request->photoId;
+        if($request->printGenus=='shasi'){
+            
+            $specialKey=$request->printGenus.$request->photoSize.$request->printType.$request->photoId.$request->thickness;
         }
-        return $cart;
+        if(!$cart){
+           
+            $cart=[$specialKey=>[
+                    'printGenus'=>$request->printGenus,
+                    'photoSize'=>$request->photoSize,
+                    'printType'=>$request->printType,
+                    'quantity'=>$request->quantity,
+                    'thickness'=>$request->thickness,
+                    'photoId'=>$request->photoId,
+                ]
+            ];
+      
+        }
+        if(array_key_exists($specialKey,$cart)){
+           
+            $cart[$specialKey]['quantity']+=$request->quantity;
+         
+        } else{
+           
+            $cart[$specialKey]=[
+                'printGenus'=>$request->printGenus,
+                'photoSize'=>$request->photoSize,
+                'printType'=>$request->printType,
+                'quantity'=>$request->quantity,
+                'thickness'=>$request->thickness,
+                'photoId'=>$request->photoId,
+            
+            
+        ];
+        
+        session()->put('cart',$cart);
+        return session()->get('cart');
+        }
+           
+        session()->put('cart',$cart);
+        return session()->get('cart');
+
+    
+
+
+
     }
 }
