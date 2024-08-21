@@ -86,8 +86,10 @@
 
 
 
-                                        <button type="button" class="badge bg-success border-0" data-toggle="modal"
-                                            data-target="#buy_photo{{ $userPhoto->id }}">سفارش خرید</button>
+                                        <button type="button" id='modalBtn' class="badge bg-success border-0"
+                                            data-toggle="modal" onclick="frmReset({{ $userPhoto->id }})"
+                                            data-target="#buy_photo{{ $userPhoto->id }}"> سفارش
+                                            خرید</button>
 
 
                                         <div class="modal fade" id="buy_photo{{ $userPhoto->id }}" tabindex="-1"
@@ -103,7 +105,7 @@
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <form id='orderForm{{ $userPhoto->id }}'
+                                                        <form class="frm" id='orderForm{{ $userPhoto->id }}'
                                                             action={{ route('image.addtocart', ['photoId' => $userPhoto->id]) }}>
 
                                                             <div class="form-group">
@@ -139,7 +141,8 @@
                                                                 <label for="printGenus">جنس چاپ</label>
                                                                 <select id="printGenus"
                                                                     class="form-control js-example-basic-single"
-                                                                    name="printGenus" onchange="calculatePriceOfPrint()">
+                                                                    name="printGenus"
+                                                                    onchange="calculatePriceOfPrint(),changeToShasi(this)">
                                                                     <option>جنس چاپ را انتخاب نمایید</option>
                                                                     @foreach (Config('photoconfig.printGenus') as $key => $printGenus)
                                                                         <option value={{ $key }}>
@@ -285,25 +288,9 @@
 
 
     <script type="text/javascript">
-        $('#printGenus').change(function(e) {
-            let tag = document.getElementById("printGenus")
-
-            if (tag.value == 'shasi') {
-                $('.thicknessOfShasi').show();
-            } else {
-                $('.thicknessOfShasi').hide();
-
-            }
-
-        });
-
-
-
         $('.btnsubmit').on('click', function() {
             var photoId = $(this).attr("data-photoId");
             var frm = $('#orderForm' + photoId);
-
-
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -351,6 +338,30 @@
         //     });
 
         // }
+        function changeToShasi(tag) {
+
+            if (tag.value == 'shasi') {
+
+                $('.thicknessOfShasi').show();
+            } else {
+
+                $('.thicknessOfShasi').hide();
+            }
+        };
+
+        function frmReset(id) {
+
+            // $("#orderForm" + id)[0].reset();
+            $('.thicknessOfShasi').hide();
+            $('.price').html('-');
+            $('.tax').html('-');
+            $('.totalPrice').html('-');
+            $('select option').prop('selected', function() {
+                return this.defaultSelected;
+
+            });
+
+        }
 
         function calculatePriceOfPrint() {
             let photoSize = $('#photoSize').val();
@@ -358,12 +369,13 @@
             let thickness = null;
             let printGenus = $('#printGenus').val();
             let quantity = $('#quantity').val();
+
+            console.log(printType);
             if (thickness != 0) {
                 thickness = $('#thickness').val();
             } else {
                 thickness = 0;
             }
-
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -380,22 +392,19 @@
 
                 },
                 success: function(result) {
+                    console.log(result);
                     $('.price').html(result.price);
                     $('.tax').html(result.tax);
                     $('.totalPrice').html(result.totalPrice);
                 },
                 error: function(e) {
+                    console.log(result);
                     $('.price').html('0 تومان');
 
                 }
             });
         }
     </script>
-
-
-
-
-
 
     <script>
         $('#myTable').DataTable({
