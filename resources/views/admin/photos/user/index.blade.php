@@ -358,19 +358,19 @@
             $('.totalPrice').html('-');
             $('select option').prop('selected', function() {
                 return this.defaultSelected;
-
             });
+
 
         }
 
         function calculatePriceOfPrint() {
+
             let photoSize = $('#photoSize').val();
             let printType = $('#printType').val();
             let thickness = null;
             let printGenus = $('#printGenus').val();
             let quantity = $('#quantity').val();
 
-            console.log(printType);
             if (thickness != 0) {
                 thickness = $('#thickness').val();
             } else {
@@ -388,9 +388,8 @@
                     'thickness': thickness,
                     'quantity': quantity,
                     'printGenus': printGenus,
-
-
                 },
+
                 success: function(result) {
                     console.log(result);
                     $('.price').html(result.price);
