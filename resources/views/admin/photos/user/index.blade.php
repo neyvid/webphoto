@@ -16,7 +16,6 @@
     </ol>
 @endsection
 
-
 @section('main-content')
     <div class="row">
         <div class="col-12">
@@ -58,7 +57,7 @@
                                         </button>
                                         <!-- The Modal For User Detail -->
                                         <div class="modal fade" id="myModal{{ $userPhoto->id }}">
-                                            <div class="modal-dialog modal-lg">
+                                            <div class="modal-dialog modal-lg mod">
                                                 <div class="modal-content">
                                                     <!-- Modal Header -->
                                                     <div class="modal-header">
@@ -98,7 +97,8 @@
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="buy_photo">فرم سفارش خرید تصویر</h5>
+                                                        <h5 class="modal-title" id="buy_photo{{ $userPhoto->id }}">فرم
+                                                            سفارش خرید تصویر</h5>
                                                         <button type="button" class="close" data-dismiss="modal"
                                                             aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
@@ -110,9 +110,9 @@
 
                                                             <div class="form-group">
                                                                 <label for="photoSize">سایز تصویر</label>
-                                                                <select id="photoSize"
+                                                                <select id="photoSize{{ $userPhoto->id }}"
                                                                     class="form-control js-example-basic-single"
-                                                                    name="photoSize" onchange="calculatePriceOfPrint()">
+                                                                    name="photoSize" onchange="calculatePriceOfPrint(this,{{ $userPhoto->id }})">
                                                                     <option>سایز تصویر را انتخاب نمایید</option>
 
                                                                     @foreach (Config('photoconfig.photosize') as $photoSize)
@@ -125,9 +125,9 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="printType">نوع چاپ</label>
-                                                                <select id="printType"
+                                                                <select id="printType{{ $userPhoto->id }}"
                                                                     class="form-control js-example-basic-single "
-                                                                    name="printType" onchange="calculatePriceOfPrint()">
+                                                                    name="printType" onchange="calculatePriceOfPrint(this,{{ $userPhoto->id }})">
                                                                     <option>نوع چاپ را انتخاب نمایید</option>
                                                                     @foreach (Config('photoconfig.printtype') as $key => $printtype)
                                                                         <option value={{ $key }}>
@@ -139,10 +139,10 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="printGenus">جنس چاپ</label>
-                                                                <select id="printGenus"
+                                                                <select id="printGenus{{ $userPhoto->id }}"
                                                                     class="form-control js-example-basic-single"
                                                                     name="printGenus"
-                                                                    onchange="calculatePriceOfPrint(),changeToShasi(this)">
+                                                                    onchange="calculatePriceOfPrint(this,{{ $userPhoto->id }}),changeToShasi(this)">
                                                                     <option>جنس چاپ را انتخاب نمایید</option>
                                                                     @foreach (Config('photoconfig.printGenus') as $key => $printGenus)
                                                                         <option value={{ $key }}>
@@ -156,9 +156,9 @@
 
                                                             <div class="form-group thicknessOfShasi" style="display: none">
                                                                 <label for="thickness">ضخامت شاسی</label>
-                                                                <select id="thickness"
+                                                                <select id="thickness{{ $userPhoto->id }}"
                                                                     class="form-control js-example-basic-single"
-                                                                    name="thickness" onchange="calculatePriceOfPrint()">
+                                                                    name="thickness" onchange="calculatePriceOfPrint(this,{{ $userPhoto->id }})">
                                                                     @foreach (Config('photoconfig.shasiTickness') as $key => $shasiTickness)
                                                                         <option value={{ $key }}>
                                                                             {{ $shasiTickness }}</option>
@@ -173,7 +173,7 @@
 
                                                                 <input min="1" max="10" value="1"
                                                                     type="number" name="quantity"
-                                                                    onchange="calculatePriceOfPrint()" id="quantity"
+                                                                    onchange="calculatePriceOfPrint(this,{{ $userPhoto->id }})" id="quantity{{ $userPhoto->id }}"
                                                                     class="form-control" />
 
                                                             </div>
@@ -285,9 +285,7 @@
     <script src="https://cdn.datatables.net/buttons/3.1.0/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/3.1.0/js/buttons.print.min.js"></script>
 
-
-
-    <script type="text/javascript">
+<script type="text/javascript">
         $('.btnsubmit').on('click', function() {
             var photoId = $(this).attr("data-photoId");
             var frm = $('#orderForm' + photoId);
@@ -311,33 +309,6 @@
         })
 
 
-
-
-        // function addToCart(userPhotoId, e, tag) {
-
-        //     var frm = $('#orderForm' + userPhotoId);
-
-        //     $('#orderForm' + userPhotoId).submit(function(e) {
-        //         e.preventDefault();
-        //         $.ajax({
-        //             headers: {
-        //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //             },
-        //             type: 'POST',
-        //             url: frm.attr('action'),
-        //             data: frm.serialize(),
-        //             success: function(data) {
-        //                 console.log('Submission was successful.');
-        //                 console.log(data);
-        //             },
-        //             error: function(data) {
-        //                 console.log('An error occurred.');
-        //                 console.log(data);
-        //             },
-        //         });
-        //     });
-
-        // }
         function changeToShasi(tag) {
 
             if (tag.value == 'shasi') {
@@ -349,30 +320,36 @@
             }
         };
 
-        function frmReset(id) {
 
-            // $("#orderForm" + id)[0].reset();
-            $('.thicknessOfShasi').hide();
+
+        function frmReset(id) {
+  
+            $('select option').prop('selected', function() {
+                return this.defaultSelected;
+
+            });
             $('.price').html('-');
             $('.tax').html('-');
             $('.totalPrice').html('-');
-            $('select option').prop('selected', function() {
-                return this.defaultSelected;
-            });
-
+           
 
         }
 
-        function calculatePriceOfPrint() {
 
-            let photoSize = $('#photoSize').val();
-            let printType = $('#printType').val();
-            let thickness = null;
-            let printGenus = $('#printGenus').val();
-            let quantity = $('#quantity').val();
 
+
+        function calculatePriceOfPrint(tag,id) {
+            
+            var photoSize =$('#photoSize'+id).val();
+            console.log(photoSize);
+            var printType = $('#printType'+id).val();
+            var thickness = null;
+            var printGenus = $('#printGenus'+id).val();
+            var quantity = $('#quantity'+id).val();
+
+           
             if (thickness != 0) {
-                thickness = $('#thickness').val();
+                thickness = $('#thickness'+id).val();
             } else {
                 thickness = 0;
             }
@@ -388,13 +365,15 @@
                     'thickness': thickness,
                     'quantity': quantity,
                     'printGenus': printGenus,
-                },
 
+
+                },
                 success: function(result) {
                     console.log(result);
                     $('.price').html(result.price);
                     $('.tax').html(result.tax);
                     $('.totalPrice').html(result.totalPrice);
+
                 },
                 error: function(e) {
                     console.log(result);
@@ -403,9 +382,8 @@
                 }
             });
         }
-    </script>
 
-    <script>
+
         $('#myTable').DataTable({
             dom: 'lBfrtip',
             buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],

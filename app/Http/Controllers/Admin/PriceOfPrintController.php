@@ -34,7 +34,7 @@ class PriceOfPrintController extends Controller
     }
 
     public function calculatePriceOfPrint(Request $request){
-     
+    //  return $request->all();
        $result=$this->priceOFPrintRepo->findBy([
         'size'=>$request->photoSize,
         'printType'=>$request->printType,
