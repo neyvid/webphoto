@@ -112,7 +112,8 @@
                                                                 <label for="photoSize">سایز تصویر</label>
                                                                 <select id="photoSize{{ $userPhoto->id }}"
                                                                     class="form-control js-example-basic-single"
-                                                                    name="photoSize" onchange="calculatePriceOfPrint(this,{{ $userPhoto->id }})">
+                                                                    name="photoSize"
+                                                                    onchange="calculatePriceOfPrint(this,{{ $userPhoto->id }})">
                                                                     <option>سایز تصویر را انتخاب نمایید</option>
 
                                                                     @foreach (Config('photoconfig.photosize') as $photoSize)
@@ -127,7 +128,8 @@
                                                                 <label for="printType">نوع چاپ</label>
                                                                 <select id="printType{{ $userPhoto->id }}"
                                                                     class="form-control js-example-basic-single "
-                                                                    name="printType" onchange="calculatePriceOfPrint(this,{{ $userPhoto->id }})">
+                                                                    name="printType"
+                                                                    onchange="calculatePriceOfPrint(this,{{ $userPhoto->id }})">
                                                                     <option>نوع چاپ را انتخاب نمایید</option>
                                                                     @foreach (Config('photoconfig.printtype') as $key => $printtype)
                                                                         <option value={{ $key }}>
@@ -158,7 +160,8 @@
                                                                 <label for="thickness">ضخامت شاسی</label>
                                                                 <select id="thickness{{ $userPhoto->id }}"
                                                                     class="form-control js-example-basic-single"
-                                                                    name="thickness" onchange="calculatePriceOfPrint(this,{{ $userPhoto->id }})">
+                                                                    name="thickness"
+                                                                    onchange="calculatePriceOfPrint(this,{{ $userPhoto->id }})">
                                                                     @foreach (Config('photoconfig.shasiTickness') as $key => $shasiTickness)
                                                                         <option value={{ $key }}>
                                                                             {{ $shasiTickness }}</option>
@@ -173,7 +176,8 @@
 
                                                                 <input min="1" max="10" value="1"
                                                                     type="number" name="quantity"
-                                                                    onchange="calculatePriceOfPrint(this,{{ $userPhoto->id }})" id="quantity{{ $userPhoto->id }}"
+                                                                    onchange="calculatePriceOfPrint(this,{{ $userPhoto->id }})"
+                                                                    id="quantity{{ $userPhoto->id }}"
                                                                     class="form-control" />
 
                                                             </div>
@@ -285,7 +289,12 @@
     <script src="https://cdn.datatables.net/buttons/3.1.0/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/3.1.0/js/buttons.print.min.js"></script>
 
-<script type="text/javascript">
+    <script type="text/javascript">
+        $(function() {
+            $(".custom-close").on('click', function() {
+                $('#myModal').modal('hide');
+            });
+        });
         $('.btnsubmit').on('click', function() {
             var photoId = $(this).attr("data-photoId");
             var frm = $('#orderForm' + photoId);
@@ -299,6 +308,7 @@
                 success: function(data) {
                     console.log('Submission was successful.');
                     console.log(data);
+
                 },
                 error: function(data) {
                     console.log('An error occurred.');
@@ -323,7 +333,7 @@
 
 
         function frmReset(id) {
-  
+
             $('select option').prop('selected', function() {
                 return this.defaultSelected;
 
@@ -331,25 +341,22 @@
             $('.price').html('-');
             $('.tax').html('-');
             $('.totalPrice').html('-');
-           
+
 
         }
 
 
 
 
-        function calculatePriceOfPrint(tag,id) {
-            
-            var photoSize =$('#photoSize'+id).val();
-            console.log(photoSize);
-            var printType = $('#printType'+id).val();
-            var thickness = null;
-            var printGenus = $('#printGenus'+id).val();
-            var quantity = $('#quantity'+id).val();
+        function calculatePriceOfPrint(tag, id) {
 
-           
+            var photoSize = $('#photoSize' + id).val();
+            var printType = $('#printType' + id).val();
+            var thickness = null;
+            var printGenus = $('#printGenus' + id).val();
+            var quantity = $('#quantity' + id).val();
             if (thickness != 0) {
-                thickness = $('#thickness'+id).val();
+                thickness = $('#thickness' + id).val();
             } else {
                 thickness = 0;
             }
@@ -369,15 +376,14 @@
 
                 },
                 success: function(result) {
-                    console.log(result);
+
                     $('.price').html(result.price);
                     $('.tax').html(result.tax);
                     $('.totalPrice').html(result.totalPrice);
 
                 },
                 error: function(e) {
-                    console.log(result);
-                    $('.price').html('0 تومان');
+
 
                 }
             });

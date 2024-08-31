@@ -102,44 +102,27 @@ class ImageController extends Controller
     
     public function addtocart(Request $request){
       
-        $cart = session()->get('cart');
+        $cart =session()->get('cart', []);
+
         $specialKey=$request->printGenus.$request->photoSize.$request->printType.$request->photoId;
         if($request->printGenus=='shasi'){
             
             $specialKey=$request->printGenus.$request->photoSize.$request->printType.$request->photoId.$request->thickness;
         }
-        if(!$cart){
-           
-            $cart=[$specialKey=>[
+        if(!array_key_exists($specialKey,$cart)){
+            $cart[$specialKey]=[
                     'printGenus'=>$request->printGenus,
                     'photoSize'=>$request->photoSize,
                     'printType'=>$request->printType,
                     'quantity'=>$request->quantity,
                     'thickness'=>$request->thickness,
                     'photoId'=>$request->photoId,
-                ]
             ];
-      
-        }
-        if(array_key_exists($specialKey,$cart)){
+        
+    
+        }else{
            
             $cart[$specialKey]['quantity']+=$request->quantity;
-         
-        } else{
-           
-            $cart[$specialKey]=[
-                'printGenus'=>$request->printGenus,
-                'photoSize'=>$request->photoSize,
-                'printType'=>$request->printType,
-                'quantity'=>$request->quantity,
-                'thickness'=>$request->thickness,
-                'photoId'=>$request->photoId,
-            
-            
-        ];
-        
-        session()->put('cart',$cart);
-        return session()->get('cart');
         }
            
         session()->put('cart',$cart);
