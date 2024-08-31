@@ -101,7 +101,7 @@ class ImageController extends Controller
     }
     
     public function addtocart(Request $request){
-      
+        
         $cart =session()->get('cart', []);
 
         $specialKey=$request->printGenus.$request->photoSize.$request->printType.$request->photoId;
@@ -110,6 +110,9 @@ class ImageController extends Controller
             $specialKey=$request->printGenus.$request->photoSize.$request->printType.$request->photoId.$request->thickness;
         }
         if(!array_key_exists($specialKey,$cart)){
+            $photoInstance=$this->photoRepo->find($request->photoId);
+            $photo_link=public_path('/uploads'.'/'.$photoInstance->user->id."/".$photoInstance->name);
+            
             $cart[$specialKey]=[
                     'printGenus'=>$request->printGenus,
                     'photoSize'=>$request->photoSize,
@@ -117,11 +120,9 @@ class ImageController extends Controller
                     'quantity'=>$request->quantity,
                     'thickness'=>$request->thickness,
                     'photoId'=>$request->photoId,
+                    'photo_link'=>$photo_link,
             ];
-        
-    
         }else{
-           
             $cart[$specialKey]['quantity']+=$request->quantity;
         }
            

@@ -40,21 +40,18 @@
 
         <!-- cart  -->
         <li class="nav-item dropdown">
+
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="fas fa-shopping-cart"></i>
-                @if (Session::has('cart'))
-                    <span class="badge badge-danger navbar-badge cartQuantity">
 
+                <span class="badge badge-danger navbar-badge cartQuantity">
+                    @if (Session::has('cart'))
                         {{ count(Session::get('cart')) }}
-
-                    </span>
-                @else
-                <span class="badge badge-danger navbar-badgev cartQuantity">
-
-                   0
-
+                    @else
+                        0
+                    @endif
                 </span>
-                @endif
+
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right cartContent">
                 @if (Session::has('cart'))
