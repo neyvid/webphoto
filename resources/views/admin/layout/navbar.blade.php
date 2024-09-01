@@ -55,18 +55,29 @@
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right cartContent">
                 @if (Session::has('cart'))
-                    @foreach (Session::get('cart') as $test)
+                    @foreach (Session::get('cart') as $photo)
                         <a href="#" class="dropdown-item">
                             <!-- Message Start -->
                             <div class="media">
-                                <img src="dist/img/user1-128x128.jpg" alt="User Avatar"
+                                <img src={{  $photo['photo_link'] }} alt="User Avatar"
                                     class="img-size-50 mr-3 img-circle">
                                 <div class="media-body">
-                                    <h3 class="dropdown-item-title">
-                                        سایز تصویر
+                                    <p class="dropdown-item-title">
+                                        سایز تصویر:
                                         <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                                        {{ $test['photoSize'] }}
-                                    </h3>
+                                        {{ $photo['photoSize'] }}
+                                    </p>
+                                    <p class="dropdown-item-title">
+                                         قیمت:
+                                        <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+                                        {{ $photo['price'] }}
+                                    </p>
+                                    
+                                    <p class="dropdown-item-title">
+                                        تعداد:
+                                       <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+                                       {{ $photo['quantity'] }}
+                                   </p>
                                     <p class="text-sm">هر وقت تونستی با من تماس بگیر ...</p>
                                     <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 ساعت پیش</p>
                                 </div>

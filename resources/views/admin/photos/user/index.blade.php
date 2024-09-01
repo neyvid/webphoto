@@ -187,11 +187,12 @@
                                                                     <table class="table">
                                                                         <tr>
                                                                             <th style="width:50%">
-                                                                                قیمت هر عدد <span
+                                                                                قیمت هر عدد <span 
                                                                                     style='font-size:13px'>(تومان)</span>:
 
                                                                             </th>
-                                                                            <td class='price'>-</td>
+                                                                           
+                                                                            <td class='price' id='price{{ $userPhoto->id }}'>-</td>
                                                                         </tr>
                                                                         <tr>
                                                                             <th>
@@ -297,17 +298,21 @@
         });
         $('.btnsubmit').on('click', function() {
             var photoId = $(this).attr("data-photoId");
+            var price=$('#price'+photoId).html();
             var frm = $('#orderForm' + photoId);
+          
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 type: 'POST',
                 url: frm.attr('action'),
-                data: frm.serialize(),
+                data:frm.serialize()+"&price="+price+"",
                 success: function(response) {
+                    
                     console.log(response);
-                    $('.cartContent').append("<a href='#' class='dropdown-item'><div class='media'><img src='dist/img/user1-128x128.jpg' alt='User Avatar'class='img-size-50 mr-3 img-circle'><div class='media-body'><h3 class='dropdown-item-title'>سایز تصویر<span class='float-right text-sm text-danger'><i class='fas fa-star'></i></span>"+ response.price +"</h3><p class='text-sm'>هر وقت تونستی با من تماس بگیر ...</p><p class='text-sm text-muted'><i class='far fa-clock mr-1'></i> 4 ساعت پیش</p></div></div></a>");
+                    $('.cartContent').append("<a href='#' class='dropdown-item'><div class='media'><img src='"+response.session[response.specialKey].photo_link+"' alt='User Photo'class='img-size-50 mr-3 img-circle'><div class='media-body'><h3 class='dropdown-item-title'>سایز تصویر<span class='float-right text-sm text-danger'><i class='fas fa-star'></i></span>"+ response.session[response.specialKey].photoSize +"</h3><p class='text-sm'>هر وقت تونستی با من تماس بگیر ...</p><p class='text-sm text-muted'><i class='far fa-clock mr-1'></i> 4 ساعت پیش</p></div></div></a>");
+                    
                     console.log('Submission was successful.');
                     
 
