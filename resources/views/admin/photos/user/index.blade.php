@@ -300,7 +300,6 @@
             var photoId = $(this).attr("data-photoId");
             var price=$('#price'+photoId).html();
             var frm = $('#orderForm' + photoId);
-          
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -309,13 +308,12 @@
                 url: frm.attr('action'),
                 data:frm.serialize()+"&price="+price+"",
                 success: function(response) {
-                    
                     console.log(response);
-                    $('.cartContent').append("<a href='#' class='dropdown-item'><div class='media'><img src='"+response.session[response.specialKey].photo_link+"' alt='User Photo'class='img-size-50 mr-3 img-circle'><div class='media-body'><h3 class='dropdown-item-title'>سایز تصویر<span class='float-right text-sm text-danger'><i class='fas fa-star'></i></span>"+ response.session[response.specialKey].photoSize +"</h3><p class='text-sm'>هر وقت تونستی با من تماس بگیر ...</p><p class='text-sm text-muted'><i class='far fa-clock mr-1'></i> 4 ساعت پیش</p></div></div></a>");
-                    
+                    $.each(response.items, function (key, item) { 
+                        $('.cartContent').append("<a href='#' class='dropdown-item'><div class='media'><img src='"+item.photo_link+"' alt='User Photo'class='img-size-50 mr-3 img-circle'><div class='media-body'><h3 class='dropdown-item-title'>سایز تصویر<span class='float-right text-sm text-danger'><i class='fas fa-star'></i></span>"+item.photoSize +"</h3><p class="dropdown-item-title">تعداد:"+item.photoSize +"<span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span></p><p class='text-sm'>هر وقت تونستی با من تماس بگیر ...</p><p class='text-sm text-muted'><i class='far fa-clock mr-1'></i> 4 ساعت پیش</p></div></div></a>");
+                    });
+                    $('.cartQuantity').html(response.count)
                     console.log('Submission was successful.');
-                    
-
                 },
                 error: function(response) {
                     console.log('An error occurred.');

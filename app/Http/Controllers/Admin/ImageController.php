@@ -20,6 +20,7 @@ class ImageController extends Controller
 {
     protected $photoRepo;
     protected $userRepo;
+    
     public function __construct()
     {
         $this->photoRepo = new PhotoRepository();
@@ -101,9 +102,8 @@ class ImageController extends Controller
     }
     
     public function addtocart(Request $request){
-   
-        $cart =session()->get('cart', []);
-
+  
+        $cart =session()->get('cart',[]);
         $specialKey=$request->printGenus.$request->photoSize.$request->printType.$request->photoId;
         if($request->printGenus=='shasi'){
             
@@ -112,7 +112,6 @@ class ImageController extends Controller
         if(!array_key_exists($specialKey,$cart)){
             $photoInstance=$this->photoRepo->find($request->photoId);
             $photo_link=asset('/uploads'.'/'.$photoInstance->user->id."/".$photoInstance->name);
-            
             $cart[$specialKey]=[
                     'printGenus'=>$request->printGenus,
                     'photoSize'=>$request->photoSize,
@@ -123,18 +122,18 @@ class ImageController extends Controller
                     'photo_link'=>$photo_link,
                     'price'=>$request->price,
             ];
+        
+            
         }else{
             $cart[$specialKey]['quantity']+=$request->quantity;
-        }
-           
-           
-        session()->put('cart',$cart);
-        $cartCount=count(session()->get('cart'));
-        return ['session'=>session()->get('cart'),'specialKey'=>$specialKey,'cartCount'=>$cartCount];
-
     
+        }     
 
 
-
+        session(['cart' => $cart]);
+       
+        $count=array_sum(array_column(session()->get('cart'), 'quantity'));
+   
+        return ['items'=>session()->get('cart'),'count'=>$count];
     }
 }

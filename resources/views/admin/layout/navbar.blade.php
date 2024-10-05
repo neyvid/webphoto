@@ -59,7 +59,7 @@
                         <a href="#" class="dropdown-item">
                             <!-- Message Start -->
                             <div class="media">
-                                <img src={{  $photo['photo_link'] }} alt="User Avatar"
+                                <img src={{ $photo['photo_link'] }} alt="User Avatar"
                                     class="img-size-50 mr-3 img-circle">
                                 <div class="media-body">
                                     <p class="dropdown-item-title">
@@ -68,16 +68,16 @@
                                         {{ $photo['photoSize'] }}
                                     </p>
                                     <p class="dropdown-item-title">
-                                         قیمت:
+                                        قیمت:
                                         <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
                                         {{ $photo['price'] }}
                                     </p>
-                                    
+
                                     <p class="dropdown-item-title">
                                         تعداد:
-                                       <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                                       {{ $photo['quantity'] }}
-                                   </p>
+                                        <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+                                        {{ $photo['quantity'] }}
+                                    </p>
                                     <p class="text-sm">هر وقت تونستی با من تماس بگیر ...</p>
                                     <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 ساعت پیش</p>
                                 </div>
